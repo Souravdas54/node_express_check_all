@@ -14,9 +14,30 @@ const ValidationSchema = joi.object({
 
     phone: joi.string().pattern(/^[0-9]{10}$/).required(),
 
-    image: joi.string().allow(null, '') // image may be null if not uploaded
+    password: joi.string()
+        .min(6)
+        // .max(20)
+        // .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$"))
+        // .message(
+        //     "Password must be 8-20 characters long, include uppercase, lowercase, number, and special character"
+        // )
+        .message(
+            "Password must be 6 characters long"
+        )
+        .required(),
+
+    image: joi.string().allow(null, ''), // image may be null if not uploaded
+
+})
+
+const loginSchema = joi.object({
+    email: joi.string().email().required(),
+    password: joi.string().required()
+})
+
+const otpschema = joi.object({
+    otp: joi.string().length(4).pattern(/^[0-9]+$/).required()
 })
 
 
-
-module.exports = { ValidationSchema }
+module.exports = { ValidationSchema, loginSchema, otpschema }
