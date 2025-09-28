@@ -264,6 +264,7 @@ class AllUserController {
                     gender: user.gender,
                     dob: user.dob,
                     phone: user.phone,
+                    city: user.city,
                     image: user.image,
                     role: user.role || 'user',
                     status: user.status
@@ -302,7 +303,7 @@ class AllUserController {
         }
     }
 
-     async logout(req, res) {
+    async logout(req, res) {
         try {
             res.clearCookie('adminToken');
             res.clearCookie('userToken');
@@ -313,7 +314,7 @@ class AllUserController {
             res.redirect('/login/user');
         }
     }
-    
+
 
     // In your controller
     async user_dashboard(req, res) {

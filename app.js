@@ -67,6 +67,9 @@ app.use((req, res, next) => {
 const userRouter = require('./app/router/userRouter')
 app.use(userRouter)
 
+const categoryRouter = require('./app/router/productRouter')
+app.use(categoryRouter)
+
 app.listen(process.env.PORT, () => {
     console.log(`Server running http://localhost:${process.env.PORT}`);
 
