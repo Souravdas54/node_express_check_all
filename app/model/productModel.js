@@ -22,6 +22,9 @@ const ProductSchema = new mongoose.Schema({
 
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user' }
 
+},{
+    timestamps: true,
+    versionKey: false
 })
 
 module.exports = mongoose.model('product', ProductSchema)

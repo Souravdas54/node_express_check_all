@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title    %> - Product Management</title>
+    <title>
+        <%= title %> - Product Management
+    </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -358,9 +359,14 @@
             }
         }
     </style>
+    <link href="/css/navbar.css" rel="stylesheet">
+
 </head>
 
 <body>
+    <!-- Navbar -->
+    <%- include('./layout/navbar.ejs') %>
+
     <div class="container">
         <header>
             <h1>Product Management</h1>
@@ -480,7 +486,7 @@
                                     <input type="file" id="productImage" name="image" accept="image/*" required>
                                     <div class="error-message" id="productImageError">Please select a product image
                                     </div>
-                                    
+
                                 </div>
 
                                 <div class="form-group">
@@ -553,104 +559,7 @@
                         </div>
     </div>
 
-    <script>
-        // Image preview functionality
-        document.getElementById('productImage').addEventListener('change', function () {
-            const file = this.files[0];
-            const preview = document.getElementById('imagePreview');
 
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    preview.innerHTML = `<img src="${e.target.result}" alt="Product Image Preview">`;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                preview.innerHTML = '<span>Image preview will appear here</span>';
-            }
-        });
-
-        // Form validation for product
-        document.getElementById('createProductForm').addEventListener('submit', function (e) {
-            const productName = document.getElementById('productName').value.trim();
-            const productCategory = document.getElementById('productCategory').value;
-            const productPrice = document.getElementById('productPrice').value;
-            const color = document.getElementById('color').value.trim();
-            const productDescription = document.getElementById('productDescription').value.trim();
-            const productQuantity = document.getElementById('productQuantity').value;
-            const productImage = document.getElementById('productImage').files[0];
-
-            let isValid = true;
-
-            // Validate product name
-            if (!productName) {
-                document.getElementById('productNameError').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('productNameError').style.display = 'none';
-            }
-
-            // Validate category
-            if (!productCategory) {
-                document.getElementById('productCategoryError').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('productCategoryError').style.display = 'none';
-            }
-
-            // Validate price
-            if (!productPrice || parseFloat(productPrice) <= 0) {
-                document.getElementById('productPriceError').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('productPriceError').style.display = 'none';
-            }
-
-            // Validate colors
-            if (!color) {
-                document.getElementById('productColorError').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('productColorError').style.display = 'none';
-            }
-
-            // Validate description
-            if (!productDescription) {
-                document.getElementById('productDescriptionError').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('productDescriptionError').style.display = 'none';
-            }
-
-            // Validate quantity
-            if (!productQuantity || parseInt(productQuantity) < 0) {
-                document.getElementById('productQuantityError').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('productQuantityError').style.display = 'none';
-            }
-
-            // Validate image
-            if (!productImage) {
-                document.getElementById('productImageError').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('productImageError').style.display = 'none';
-            }
-
-            if (!isValid) {
-                e.preventDefault();
-            }
-        });
-
-        // Auto-hide flash messages after 5 seconds
-        setTimeout(() => {
-            const flashMessages = document.querySelectorAll('.flash-message');
-            flashMessages.forEach(message => {
-                message.style.display = 'none';
-            });
-        }, 5000);
-    </script>
 </body>
 
 </html>

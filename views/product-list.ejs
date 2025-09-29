@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Your Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar-header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .category-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .category-item:hover,
+        .category-item.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Search Bar */
+        .search-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem 0.75rem 3rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        /* Product Cards */
+        .product-card {
+            background: white;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 300px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .product-price {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .btn-view {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-view:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-cart {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Modal Styles */
+        .product-modal .modal-content {
+            border-radius: 20px;
+            border: none;
+        }
+
+        .product-modal .modal-header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+
+        .product-modal .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .modal-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            .sidebar {
+                margin-bottom: 2rem;
+                position: static;
+            }
+
+            .product-image {
+                height: 150px;
+            }
+
+            .search-container {
+                padding: 1rem;
+            }
+
+            .modal-image {
+                height: 200px;
+            }
+        }
+
+        @media (min-width: 577px) and (max-width: 768px) {
+            .col-product {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 992px) {
+            .col-product {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+        @media (min-width: 993px) and (max-width: 1200px) {
+            .col-product {
+                flex: 0 0 33.333%;
+                max-width: 33.333%;
+            }
+        }
+
+        @media (min-width: 1201px) and (max-width: 1400px) {
+            .col-product {
+                flex: 0 0 25%;
+                max-width: 25%;
+            }
+        }
+
+        @media (min-width: 1401px) {
+            .col-product {
+                flex: 0 0 20%;
+                max-width: 20%;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <%- include('./layout/navbar.ejs') %>
+
+        <div class="container-fluid py-4">
+            <div class="row">
+                <!-- Sidebar - Categories -->
+                <div class="col-12 col-lg-3 col-xl-2 mb-4">
+                    <div class="sidebar">
+                        <div class="sidebar-header">
+                            <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Filters</h5>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6 class="text-muted mb-3">Categories</h6>
+                            <ul class="category-list">
+                                <li class="category-item active" data-category="all">
+                                    <i class="fas fa-th-large me-2"></i>All Products
+                                </li>
+                                <% categories.forEach(category=> { %>
+                                    <li class="category-item" data-category="<%= category._id %>">
+                                        <i class="fas fa-tag me-2"></i>
+                                        <%= category.category_name %>
+                                    </li>
+                                    <% }); %>
+                            </ul>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6 class="text-muted mb-3">Price Range</h6>
+                            <input type="range" class="form-range" id="priceRange" min="0" max="100000" step="1000">
+                            <div class="d-flex justify-content-between">
+                                <small>$0</small>
+                                <small id="priceValue">$100,000</small>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h6 class="text-muted mb-2">Sort By</h6>
+                            <select class="form-select" id="sortSelect">
+                                <option value="newest">Newest First</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="name">Name: A to Z</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-12 col-lg-9 col-xl-10">
+                    <!-- Search Bar -->
+                    <div class="search-container">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <div class="search-box">
+                                    <i class="fas fa-search search-icon"></i>
+                                    <input type="text" class="form-control search-input" id="searchInput"
+                                        placeholder="Search products...">
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <span class="text-muted" id="productCount">
+                                    Showing <%= products.length %> products
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="row" id="productsGrid">
+                        <% products.forEach(product=> { %>
+                            <div class="col-product mb-4"
+                                data-category="<%= product.category_id || product.category?._id %>"
+                                data-price="<%= product.price %>" data-id="<%= product._id %>"
+                                data-brand="<%= product.brand %>" data-color="<%= product.color %>"
+                                data-quantity="<%= product.quantity %>"
+                                data-category-name="<%= product.category_name || product.category?.category_name || 'Uncategorized' %>"
+                                data-full-description="<%= product.description %>">
+                                <div class="card product-card">
+                                    <% if (product.featured) { %>
+                                        <span class="badge bg-warning product-badge">Featured</span>
+                                        <% } %>
+
+                                            <img src="/<%= product.image %>" class="product-image"
+                                                alt="<%= product.product_name %>"
+                                                onerror="this.src='/images/placeholder.jpg'">
+
+                                            <div class="card-body">
+                                                <h6 class="product-title">
+                                                    <%= product.product_name %>
+                                                </h6>
+                                                <p class="product-description mb-2">
+                                                    <%= product.description && product.description.length> 100 ?
+                                                        product.description.substring(0, 100) + '...' :
+                                                        product.description || 'No description available' %>
+                                                </p>
+
+                                                <div class="mb-3">
+                                                    <span class="product-price">$<%= product.price %></span>
+                                                    <small class="text-muted ms-2">
+                                                        <i class="fas fa-box"></i>
+                                                        <%= product.quantity %> in stock
+                                                    </small>
+                                                </div>
+
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span
+                                                        class="badge bg-<%= product.quantity > 0 ? 'success' : 'danger' %>">
+                                                        <%= product.quantity> 0 ? 'In Stock' : 'Out of Stock' %>
+                                                    </span>
+                                                    <div>
+                                                        <button class="btn btn-sm btn-view me-2" data-bs-toggle="modal"
+                                                            data-bs-target="#productModal"
+                                                            onclick="showProductDetails('<%= product._id %>')">
+                                                            View
+                                                        </button>
+                                                        <button class="btn btn-sm btn-cart" <%=product.quantity===0
+                                                            ? 'disabled' : '' %>
+                                                            onclick="addToCart(event, '<%= product._id %>')">
+                                                                <i class="fas fa-shopping-cart"></i> Cart
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+                            </div>
+                            <% }); %>
+                    </div>
+
+                    <!-- No Products Message -->
+                    <div id="noProducts" class="text-center py-5" style="display: none;">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No products found</h4>
+                        <p class="text-muted">Try adjusting your search or filters</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Modal -->
+        <div class="modal fade product-modal" id="productModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalProductName">Product Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-4 mb-md-0">
+                                <img id="modalProductImage" src="" class="modal-image" alt="Product Image">
+                            </div>
+                            <div class="col-md-6">
+                                <h4 id="modalProductTitle" class="mb-3"></h4>
+                                <p id="modalProductDescription" class="text-muted mb-3"></p>
+
+                                <div class="mb-3">
+                                    <span id="modalProductPrice" class="modal-price"></span>
+                                    <span class="badge bg-success ms-2" id="modalProductStock"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Category:</strong>
+                                    <span id="modalProductCategory" class="badge bg-primary ms-2"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Brand:</strong>
+                                    <span id="modalProductBrand" class="ms-2"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Colors:</strong>
+                                    <div id="modalProductColors" class="mt-1"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Quantity:</strong>
+                                    <span id="modalProductQuantity" class="ms-2"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Status:</strong>
+                                    <span id="modalProductStatus" class="badge bg-success ms-2"></span>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-cart btn-lg" id="modalAddToCart">
+                                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.getElementById('searchInput');
+                const categoryItems = document.querySelectorAll('.category-item');
+                const priceRange = document.getElementById('priceRange');
+                const sortSelect = document.getElementById('sortSelect');
+                const productsGrid = document.getElementById('productsGrid');
+                const noProducts = document.getElementById('noProducts');
+                const productCount = document.getElementById('productCount');
+
+                // Update price value
+                priceRange.addEventListener('input', function () {
+                    document.getElementById('priceValue').textContent = '$' + parseInt(this.value).toLocaleString();
+                    filterProducts();
+                });
+
+                // Category filter
+                categoryItems.forEach(item => {
+                    item.addEventListener('click', function () {
+                        categoryItems.forEach(i => i.classList.remove('active'));
+                        this.classList.add('active');
+                        filterProducts();
+                    });
+                });
+
+                // Search functionality
+                searchInput.addEventListener('input', filterProducts);
+
+                // Sort functionality
+                sortSelect.addEventListener('change', filterProducts);
+
+                function filterProducts() {
+                    const searchTerm = searchInput.value.toLowerCase();
+                    const selectedCategory = document.querySelector('.category-item.active').dataset.category;
+                    const maxPrice = parseInt(priceRange.value);
+                    const sortBy = sortSelect.value;
+
+                    const productCards = Array.from(productsGrid.querySelectorAll('.col-product'));
+                    let visibleCards = [];
+
+                    productCards.forEach(card => {
+                        const productName = card.querySelector('.product-title').textContent.toLowerCase();
+                        const productDesc = card.querySelector('.product-description').textContent.toLowerCase();
+                        const productPrice = parseInt(card.dataset.price);
+                        const productCategory = card.dataset.category;
+
+                        const matchesSearch = productName.includes(searchTerm) || productDesc.includes(searchTerm);
+                        const matchesCategory = selectedCategory === 'all' || productCategory === selectedCategory;
+                        const matchesPrice = productPrice <= maxPrice;
+
+                        if (matchesSearch && matchesCategory && matchesPrice) {
+                            card.style.display = 'block';
+                            visibleCards.push(card);
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Sort only visible cards
+                    sortProducts(visibleCards, sortBy);
+
+                    // Update product count
+                    productCount.textContent = `Showing ${visibleCards.length} products`;
+
+                    // Show/hide no products message
+                    noProducts.style.display = visibleCards.length === 0 ? 'block' : 'none';
+                }
+
+                function sortProducts(cards, sortBy) {
+                    cards.sort((a, b) => {
+                        const priceA = parseInt(a.dataset.price);
+                        const priceB = parseInt(b.dataset.price);
+                        const nameA = a.querySelector('.product-title').textContent.toLowerCase();
+                        const nameB = b.querySelector('.product-title').textContent.toLowerCase();
+
+                        switch (sortBy) {
+                            case 'price-low':
+                                return priceA - priceB;
+                            case 'price-high':
+                                return priceB - priceA;
+                            case 'name':
+                                return nameA.localeCompare(nameB);
+                            default: // newest
+                                return 0; // Keep original order
+                        }
+                    });
+
+                    // Reappend sorted cards
+                    cards.forEach(card => productsGrid.appendChild(card));
+                }
+            });
+
+            // Show product details in modal
+            function showProductDetails(productId) {
+                try {
+                    const productCard = document.querySelector(`.col-product[data-id="${productId}"]`);
+                    if (!productCard) {
+                        console.error('Product card not found for ID:', productId);
+                        return;
+                    }
+
+                    // Get product data from card
+                    const productImage = productCard.querySelector('.product-image').src;
+                    const productTitle = productCard.querySelector('.product-title').textContent;
+
+                    // Get FULL description from data attribute
+                    const fullDescription = productCard.dataset.fullDescription ||
+                        productCard.querySelector('.product-description').textContent;
+
+                    // Update modal content
+                    document.getElementById('modalProductName').textContent = productTitle;
+                    document.getElementById('modalProductTitle').textContent = productTitle;
+                    document.getElementById('modalProductDescription').textContent = fullDescription;
+                    document.getElementById('modalProductPrice').textContent = '$' + productCard.dataset.price;
+
+                    // Stock information
+                    const quantity = parseInt(productCard.dataset.quantity);
+                    const stockBadge = document.getElementById('modalProductStock');
+                    stockBadge.textContent = quantity > 0 ? 'In Stock' : 'Out of Stock';
+                    stockBadge.className = quantity > 0 ? 'badge bg-success ms-2' : 'badge bg-danger ms-2';
+
+                    // Category - FIXED: Get from data attribute
+                    const categoryName = productCard.dataset.categoryName || 'Uncategorized';
+                    document.getElementById('modalProductCategory').textContent = categoryName;
+
+                    // Brand
+                    document.getElementById('modalProductBrand').textContent = productCard.dataset.brand || 'N/A';
+
+                    // Quantity
+                    document.getElementById('modalProductQuantity').textContent = quantity;
+
+                    // Status
+                    const status = quantity > 0 ? 'Active' : 'Out of Stock';
+                    const statusBadge = document.getElementById('modalProductStatus');
+                    statusBadge.textContent = status;
+                    statusBadge.className = quantity > 0 ? 'badge bg-success ms-2' : 'badge bg-danger ms-2';
+
+                    // Image
+                    document.getElementById('modalProductImage').src = productImage;
+
+                    // Update colors - handle array properly
+                    const colorsContainer = document.getElementById('modalProductColors');
+                    colorsContainer.innerHTML = '';
+                    const colors = productCard.dataset.color ? productCard.dataset.color.split(',') : [];
+
+                    if (colors.length > 0 && colors[0].trim() !== '') {
+                        colors.forEach(color => {
+                            const colorText = color.trim();
+                            if (colorText) {
+                                const badge = document.createElement('span');
+                                badge.className = 'badge bg-secondary me-1 mb-1';
+                                badge.textContent = colorText;
+                                colorsContainer.appendChild(badge);
+                            }
+                        });
+                    } else {
+                        colorsContainer.textContent = 'No colors specified';
+                    }
+
+                    // Update add to cart button
+                    const addToCartBtn = document.getElementById('modalAddToCart');
+                    if (quantity > 0) {
+                        addToCartBtn.disabled = false;
+                        addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+                        addToCartBtn.onclick = (e) => addToCart(e, productId);
+                    } else {
+                        addToCartBtn.disabled = true;
+                        addToCartBtn.innerHTML = 'Out of Stock';
+                        addToCartBtn.onclick = null;
+                    }
+
+                } catch (error) {
+                    console.error('Error loading product details:', error);
+                }
+            }
+
+            // Add to cart
+            function addToCart(event, productId) {
+                const btn = event.currentTarget;
+                const originalText = btn.innerHTML;
+
+                btn.innerHTML = '<span class="loading"></span> Adding...';
+                btn.disabled = true;
+
+                // Simulate API call
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }, 2000);
+
+                    // Show success message
+                    const toast = document.createElement('div');
+                    toast.className = 'alert alert-success position-fixed top-0 end-0 m-3';
+                    toast.style.zIndex = '9999';
+                    toast.textContent = 'Product added to cart successfully!';
+                    document.body.appendChild(toast);
+
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 3000);
+                }, 1000);
+            }
+        </script>
+</body>
+
+</html>

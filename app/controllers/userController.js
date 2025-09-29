@@ -14,13 +14,16 @@ class AllUserController {
 
     async index(req, res) {
         res.render('index', {
-            title: 'Home '
+            title: 'Home ',
+            user: req.user || null,
         })
     }
 
     async signup(req, res) {
         res.render('auth/register', {
-            title: "Register"
+            title: "Register",
+            user: req.user || null,
+
         })
     }
 
@@ -203,8 +206,9 @@ class AllUserController {
     async signin(req, res) {
         res.render('auth/login', {
             title: 'Login',
-            success_msg: req.flash('success_msg'),
-            error_msg: req.flash('error_msg')
+            // user: req.user || null,
+            error_msg: req.flash('error_msg'),
+            success_msg: req.flash('success_msg')
         })
     }
 
@@ -280,7 +284,8 @@ class AllUserController {
                 res.cookie('adminToken', token, {
                     httpOnly: true,
                     secure: false, // Set to false for development
-                    maxAge: 24 * 60 * 60 * 1000
+                    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+                    // maxAge: 30 * 60 * 1000 // 30 minutes
                 });
                 req.flash('success', `Welcome back, ${user.name || 'Admin'}!`);
                 console.log('Setting admin cookie and redirecting...');

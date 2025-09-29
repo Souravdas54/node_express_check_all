@@ -12,20 +12,27 @@ const verifyToken = (token) => {
 // User Auth Middleware
 const userAuth = (req, res, next) => {
     const userToken = req.cookies?.userToken;
-    
+
     if (!userToken) {
-        req.flash('error', 'Please login as user to access this page.');
+        req.flash('error_msg', 'Please login to access this page.');
         return res.redirect('/login/user');
     }
 
     const user = verifyToken(userToken);
     if (!user || user.role !== 'user') {
         res.clearCookie('userToken');
-        req.flash('error', 'Invalid user session. Please login again.');
+        req.flash('error_msg', 'Invalid user session. Please login again.');
         return res.redirect('/login/user');
     }
 
-    req.user = user;
+    // req.user = user;
+    req.user = {
+        _id: user.userId || user._id,
+        role: user.role || user.role,
+        name: user.name || user.name,
+        email: user.email || user.email,
+        status: user.status || user.status
+    };
     next();
 };
 
@@ -33,7 +40,7 @@ const userAuth = (req, res, next) => {
 const redirectUserIfAuthenticated = (req, res, next) => {
     const userToken = req.cookies?.userToken;
     const user = verifyToken(userToken);
-    
+
     if (user && user.role === 'user') {
         return res.redirect('/user/dashboard');
     }
@@ -43,7 +50,7 @@ const redirectUserIfAuthenticated = (req, res, next) => {
 // User logout - only clears user token
 const userLogout = (req, res) => {
     res.clearCookie('userToken');
-    req.flash('success', 'User logged out successfully.');
+    req.flash('success_msg', 'User logged out successfully.');
     res.redirect('/login/user');
 };
 

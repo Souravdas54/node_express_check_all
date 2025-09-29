@@ -12,13 +12,14 @@ const verifyToken = (token) => {
 // Admin Auth Middleware
 const adminAuth = (req, res, next) => {
     const adminToken = req.cookies?.adminToken;
-    
+
     if (!adminToken) {
         req.flash('error', 'Please login as admin to access this page.');
         return res.redirect('/login/user');
     }
 
     const admin = verifyToken(adminToken);
+
     if (!admin || admin.role !== 'admin') {
         res.clearCookie('adminToken');
         req.flash('error', 'Invalid admin session. Please login again.');
@@ -26,6 +27,12 @@ const adminAuth = (req, res, next) => {
     }
 
     req.user = admin;
+    // req.user = {
+    //     _id: admin.userId ,
+    //     role: admin.role ,
+    //     name: admin.name ,
+    //     email: admin.email ,
+    //     status: admin.status };
     next();
 };
 
@@ -33,7 +40,7 @@ const adminAuth = (req, res, next) => {
 const redirectAdminIfAuthenticated = (req, res, next) => {
     const adminToken = req.cookies?.adminToken;
     const admin = verifyToken(adminToken);
-    
+
     if (admin && admin.role === 'admin') {
         return res.redirect('/admin/dashboard');
     }

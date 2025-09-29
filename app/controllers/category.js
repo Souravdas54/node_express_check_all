@@ -11,7 +11,8 @@ class AllCategory {
             res.render('category', {
                 title: "Category Product",
                 categories: categories,
-                userId
+                userId,
+                user:req.user
             })
         } catch (error) {
             console.error("Error fetching categories:", error);
@@ -27,22 +28,42 @@ class AllCategory {
 
             // const userId = req.user ? req.user._id : null;
 
+            // ✅ আগে চেক করো exists কিনা
+            // const existingCategory = await Category.findOne({ category_name: category_name.trim() });
+
+            // if (existingCategory) {
+            //     req.flash('error', 'Category name already exists!');
+            //     return res.redirect('/category');
+            // }
+
             const newCategory = new Category({
                 category_name,
                 category_description,
                 status: status || 'active',
-                userId: req.user ? req.user.userId : null
+                userId: req.user ? req.user._id : null
             })
 
             await newCategory.save()
 
-            req.flash('success', 'Category created successfully!');
+           req.flash('success_msg', 'Category created successfully!');
+
             res.redirect('/category');
 
         } catch (error) {
-            res.status(500).json({
-                message: "internal server error",
-            })
+            console.log("❌ Error in create_category:", error);
+
+            // ✅ Handle duplicate category_name
+            if (error.code === 11000) {
+                req.flash('error_msg', 'Category name already exists!');
+                return res.redirect('/category');
+            }
+
+            req.flash('error_msg', 'Internal server error!');
+            res.redirect('/category');
+
+            // res.status(500).json({
+            //     message: "internal server error",
+            // })
         }
     }
 

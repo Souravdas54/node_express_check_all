@@ -1,27 +1,71 @@
-<!-- navbar.html -->
-<header id="header">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark custom-navbar">
     <div class="container">
-        <nav class="navbar">
-            <a href="index.html" class="logo">
-                <i class="fas fa-rocket"></i> BrandName
-            </a>
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-store me-2"></i>Your Store
+        </a>
 
-            <ul class="nav-menu">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="/category">Products</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+        <!-- Toggler button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/product">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/category">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/product/list">Products List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
             </ul>
 
-            <div class="nav-btns">
-                <a href="/login/user" class="btn btn-outline">Sign In</a>
-                <a href="/register/user" class="btn btn-primary">Register</a>
-            </div>
-
-            <div class="hamburger">
-                <i class="fas fa-bars"></i>
-            </div>
-        </nav>
+            <ul class="navbar-nav ms-auto">
+                <% if (user) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">
+                            <i class="fas fa-shopping-cart"></i> Cart
+                            <span class="badge bg-primary">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i>
+                            <%= user.name || user.email %>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/profile"><i
+                                        class="fas fa-user-circle me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="/orders"><i
+                                        class="fas fa-clipboard-list me-2"></i>Orders</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/logout/admin"><i
+                                        class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register"><i class="fas fa-user-plus me-1"></i>Register</a>
+                        </li>
+                        <% } %>
+            </ul>
+        </div>
     </div>
-</header>
-
+</nav>

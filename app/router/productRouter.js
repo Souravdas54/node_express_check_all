@@ -16,6 +16,8 @@ router.get('/product', adminAuth, AllProduct.product)
 
 router.post('/product/create', adminAuth, uploads.single('image'), AllProduct.create_product)
 
+router.get('/product/list', adminAuth, AllProduct.product_list)
+
 
 
 module.exports = router
