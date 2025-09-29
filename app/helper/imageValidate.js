@@ -1,5 +1,6 @@
 const multer = require('multer')
 
+// ====== AUTH IMAGE UPLOADS ====== //
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './uploads')
@@ -23,3 +24,4 @@ const uploads = multer({
 })
 
 module.exports = uploads
+

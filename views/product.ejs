@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,8 @@
         <%= title %> - Product Management
     </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -19,6 +22,8 @@
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
+            /* Add padding to prevent navbar overlap */
+            /* padding-top: 80px; */
         }
 
         .container {
@@ -166,6 +171,18 @@
             background: #95a5a6;
         }
 
+        .btn-edit {
+            background: #3498db;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+
         .form-actions {
             display: flex;
             justify-content: flex-end;
@@ -221,113 +238,250 @@
             object-fit: cover;
         }
 
+        /* Container-fluid Styles - FULL SCREEN & RESPONSIVE */
+        .container-fluid {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
         .products-list {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-top: 30px;
+            padding: 40px 20px;
+            border-radius: 0;
+            box-shadow: none;
+            margin-top: 0;
+            width: 100%;
         }
 
         .products-list h3 {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             color: #2c3e50;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 2rem;
+            text-align: center;
+            justify-content: center;
         }
 
+        /* Updated Product Grid for Full Screen Responsive Layout */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 25px;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Responsive Grid Layout */
+        /* Extra Small (xs) - 1 column */
+        .product-grid {
+            grid-template-columns: repeat(1, 1fr);
+            padding: 0 15px;
+        }
+
+        /* Small (sm) - 2 columns */
+        @media (min-width: 576px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0 20px;
+            }
+        }
+
+        /* Medium (md) - 3 columns */
+        @media (min-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+                padding: 0 30px;
+            }
+        }
+
+        /* Large (lg) - 4 columns */
+        @media (min-width: 992px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+                padding: 0 40px;
+            }
+        }
+
+        /* Extra Large (xl) - 5 columns */
+        @media (min-width: 1200px) {
+            .product-grid {
+                grid-template-columns: repeat(5, 1fr);
+                padding: 0 50px;
+            }
+        }
+
+        /* Extra Extra Large (xxl) - 6 columns */
+        @media (min-width: 1400px) {
+            .product-grid {
+                grid-template-columns: repeat(6, 1fr);
+                padding: 0 60px;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
         }
 
         .product-card {
-            border: 1px solid #eee;
-            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #6a11cb;
         }
 
         .product-image {
-            height: 200px;
-            background-color: #f8f9fa;
+            height: 180px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            border-bottom: 1px solid #e9ecef;
         }
 
         .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
         }
 
         .product-info {
-            padding: 15px;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-info h4 {
             color: #2c3e50;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-size: 1.1rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-weight: 600;
         }
 
         .product-meta {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            align-items: center;
+            margin-bottom: 12px;
             font-size: 0.9rem;
         }
 
         .product-price {
             color: #6a11cb;
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.2rem;
         }
 
         .product-quantity {
-            color: #7f8c8d;
+            color: #6c757d;
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
         }
 
         .product-colors {
             display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
+            gap: 6px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
         }
 
         .color-badge {
-            padding: 2px 8px;
-            background-color: #e9ecef;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            color: #495057;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-description {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+            flex-grow: 1;
         }
 
         .product-status {
-            padding: 4px 12px;
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             display: inline-block;
+            margin-bottom: 15px;
+            text-align: center;
+            width: fit-content;
         }
 
         .status-active {
-            background-color: #d4edda;
-            color: #155724;
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
         }
 
         .status-inactive {
-            background-color: #f8d7da;
-            color: #721c24;
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        .product-actions .btn {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            flex: 1;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .product-actions .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         }
 
         @keyframes fadeIn {
@@ -340,7 +494,53 @@
             }
         }
 
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 575px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .products-list {
+                padding: 30px 15px;
+            }
+
+            .products-list h3 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+
+            .product-grid {
+                gap: 15px;
+            }
+
+            .product-image {
+                height: 150px;
+            }
+
+            .product-info {
+                padding: 15px;
+            }
+
+            .product-actions {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .product-actions .btn {
+                width: 100%;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Keep original container styles for the form section */
         @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
             .container {
                 padding: 10px;
             }
@@ -353,213 +553,271 @@
                 flex-direction: column;
                 gap: 0;
             }
+        }
 
-            .product-grid {
-                grid-template-columns: 1fr;
+        /* Extra small devices */
+        @media (max-width: 576px) {
+            body {
+                padding-top: 60px;
+            }
+
+            .form-container {
+                padding: 20px;
             }
         }
     </style>
-    <link href="/css/navbar.css" rel="stylesheet">
-
 </head>
 
 <body>
     <!-- Navbar -->
     <%- include('./layout/navbar.ejs') %>
 
-    <div class="container">
-        <header>
-            <h1>Product Management</h1>
-            <p>Create and manage your products</p>
-        </header>
+        <div class="container">
+            <header>
+                <h1>Product Management</h1>
+                <p>Create and manage your products</p>
+            </header>
 
-        <div class="navigation">
-            <a href="/category" class="nav-btn">
-                <i class="fas fa-tags"></i> Manage Categories
-            </a>
-            <a href="/product" class="nav-btn active">
-                <i class="fas fa-cube"></i> Manage Products
-            </a>
+            <div class="navigation">
+                <a href="/category" class="nav-btn">
+                    <i class="fas fa-tags"></i> Manage Categories
+                </a>
+                <a href="/product" class="nav-btn active">
+                    <i class="fas fa-cube"></i> Manage Products
+                </a>
+            </div>
+
+            <!-- Flash Messages -->
+            <% if (success_msg && success_msg.length> 0) { %>
+                <div class="flash-message flash-success">
+                    <i class="fas fa-check-circle"></i>
+                    <span>
+                        <%= success_msg %>
+                    </span>
+                </div>
+                <% } %>
+
+                    <% if (error_msg && error_msg.length> 0) { %>
+                        <div class="flash-message flash-error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>
+                                <%= error_msg %>
+                            </span>
+                        </div>
+                        <% } %>
+
+                            <div class="form-container">
+                                <h2 class="form-title"><i class="fas fa-plus-circle"></i> Create New Product</h2>
+
+                                <form id="createProductForm" method="POST" action="/product/create"
+                                    enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="productName">Product Name *</label>
+                                        <input type="text" name="product_name" id="productName"
+                                            placeholder="Enter product name" required>
+                                        <div class="error-message" id="productNameError">Product name is required</div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-col">
+                                            <div class="form-group">
+                                                <label for="productCategory">Category *</label>
+                                                <select id="productCategory" name="category_id" required>
+                                                    <option value="">Select a category</option>
+                                                    <% if (categories && categories.length> 0) { %>
+                                                        <% categories.forEach(function(category) { %>
+                                                            <option value="<%= category._id %>">
+                                                                <%= category.category_name %>
+                                                            </option>
+                                                            <% }); %>
+                                                                <% } else { %>
+                                                                    <option value="">No categories available</option>
+                                                                    <% } %>
+                                                </select>
+                                                <div class="error-message" id="productCategoryError">Please select a
+                                                    category</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-col">
+                                            <div class="form-group">
+                                                <label for="productPrice">Price *</label>
+                                                <input type="number" name="price" id="productPrice"
+                                                    placeholder="Enter price" min="0" step="0.01" required>
+                                                <div class="error-message" id="productPriceError">Please enter a valid
+                                                    price
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="color">Colors *</label>
+                                        <input type="text" id="color" name="color"
+                                            placeholder="Enter product colors (comma separated)" required>
+                                        <div class="error-message" id="productColorError">Please enter at least one
+                                            color
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="productDescription">Description *</label>
+                                        <textarea id="productDescription" name="description" rows="4"
+                                            placeholder="Enter product description" required></textarea>
+                                        <div class="error-message" id="productDescriptionError">Product description is
+                                            required</div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-col">
+                                            <div class="form-group">
+                                                <label for="productQuantity">Quantity *</label>
+                                                <input type="number" id="productQuantity" name="quantity"
+                                                    placeholder="Enter quantity" min="0" required>
+                                                <div class="error-message" id="productQuantityError">Please enter a
+                                                    valid
+                                                    quantity</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-col">
+                                            <div class="form-group">
+                                                <label for="productBrand">Brand</label>
+                                                <input type="text" id="productBrand" name="brand"
+                                                    placeholder="Enter brand name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="productImage">Product Image *</label>
+                                        <input type="file" id="productImage" name="image" accept="image/*" required>
+                                        <div class="error-message" id="productImageError">Please select a product image
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="productStatus">Status</label>
+                                        <select id="productStatus" name="status">
+                                            <option value="active">Active</option>
+                                            <option value="inactive">Inactive</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button type="reset" class="btn btn-secondary">
+                                            <i class="fas fa-redo"></i> Reset
+                                        </button>
+                                        <button type="submit" class="btn">
+                                            <i class="fas fa-save"></i> Create Product
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
         </div>
 
-        <!-- Flash Messages -->
-        <% if (success_msg && success_msg.length> 0) { %>
-            <div class="flash-message flash-success">
-                <i class="fas fa-check-circle"></i>
-                <span>
-                    <%= success_msg %>
-                </span>
-            </div>
-            <% } %>
+        <!-- Existing Products List - FULL SCREEN CONTAINER-FLUID -->
+        <div class="container-fluid">
+            <div class="products-list">
+                <h3><i class="fas fa-cubes"></i> Existing Products</h3>
 
-                <% if (error_msg && error_msg.length> 0) { %>
-                    <div class="flash-message flash-error">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <span>
-                            <%= error_msg %>
-                        </span>
+                <% if (products && products.length> 0) { %>
+                    <div class="product-grid">
+                        <% products.forEach(function(product) { %>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <% if (product.image) { %>
+                                        <img src="/<%= product.image %>" alt="<%= product.product_name %>">
+                                        <% } else { %>
+                                            <i class="fas fa-cube" style="font-size: 3rem; color: #6c757d;"></i>
+                                            <% } %>
+                                </div>
+                                <div class="product-info">
+                                    <h4>
+                                        <%= product.product_name %>
+                                    </h4>
+                                    <div class="product-meta">
+                                        <span class="product-price">$<%= product.price %></span>
+                                        <span class="product-quantity">Qty: <%= product.quantity %></span>
+                                    </div>
+                                    <% if (product.color && product.color.length> 0) { %>
+                                        <div class="product-colors">
+                                            <% const colors=Array.isArray(product.color) ? product.color :
+                                                product.color.split(','); %>
+                                                <% colors.slice(0, 3).forEach(function(color) { %>
+                                                    <span class="color-badge">
+                                                        <%= color.trim() %>
+                                                    </span>
+                                                    <% }); %>
+                                                        <% if (colors.length> 3) { %>
+                                                            <span class="color-badge">+<%= colors.length - 3 %>
+                                                                    more</span>
+                                                            <% } %>
+                                        </div>
+                                        <% } %>
+                                            <p class="product-description">
+                                                <%= product.description && product.description.length> 80 ?
+                                                    product.description.substring(0, 80) + '...' :
+                                                    product.description %>
+                                            </p>
+                                            <span
+                                                class="product-status <%= product.status === 'active' ? 'status-active' : 'status-inactive' %>">
+                                                <%= product.status %>
+                                            </span>
+                                            <div class="product-actions">
+                                                <button class="btn btn-edit"
+                                                    onclick="editProduct('<%= product._id %>')">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </button>
+                                                <button class="btn btn-delete"
+                                                    onclick="deleteProduct('<%= product._id %>')">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </button>
+                                            </div>
+                                </div>
+                            </div>
+                            <% }); %>
                     </div>
-                    <% } %>
+                    <% } else { %>
+                        <p style="text-align: center; color: #6c757d; font-size: 1.1rem; padding: 40px;">
+                            No products found. Create your first product above.
+                        </p>
+                        <% } %>
+            </div>
+        </div>
 
-                        <div class="form-container">
-                            <h2 class="form-title"><i class="fas fa-plus-circle"></i> Create New Product</h2>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function editProduct(productId) {
+                // Redirect to edit page or open edit modal
+                window.location.href = `/product/edit/${productId}`;
+            }
 
-                            <form id="createProductForm" method="POST" action="/product/create"
-                                enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <label for="productName">Product Name *</label>
-                                    <input type="text" name="product_name" id="productName"
-                                        placeholder="Enter product name" required>
-                                    <div class="error-message" id="productNameError">Product name is required</div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="productCategory">Category *</label>
-                                            <select id="productCategory" name="category_id" required>
-                                                <option value="">Select a category</option>
-                                                <% if (categories && categories.length> 0) { %>
-                                                    <% categories.forEach(function(category) { %>
-                                                        <option value="<%= category._id %>">
-                                                            <%= category.category_name %>
-                                                        </option>
-                                                        <% }); %>
-                                                            <% } else { %>
-                                                                <option value="">No categories available</option>
-                                                                <% } %>
-                                            </select>
-                                            <div class="error-message" id="productCategoryError">Please select a
-                                                category</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="productPrice">Price *</label>
-                                            <input type="number" name="price" id="productPrice"
-                                                placeholder="Enter price" min="0" step="0.01" required>
-                                            <div class="error-message" id="productPriceError">Please enter a valid price
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="color">Colors *</label>
-                                    <input type="text" id="color" name="color"
-                                        placeholder="Enter product colors (comma separated)" required>
-                                    <div class="error-message" id="productColorError">Please enter at least one color
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="productDescription">Description *</label>
-                                    <textarea id="productDescription" name="description" rows="4"
-                                        placeholder="Enter product description" required></textarea>
-                                    <div class="error-message" id="productDescriptionError">Product description is
-                                        required</div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="productQuantity">Quantity *</label>
-                                            <input type="number" id="productQuantity" name="quantity"
-                                                placeholder="Enter quantity" min="0" required>
-                                            <div class="error-message" id="productQuantityError">Please enter a valid
-                                                quantity</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="productBrand">Brand</label>
-                                            <input type="text" id="productBrand" name="brand"
-                                                placeholder="Enter brand name">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="productImage">Product Image *</label>
-                                    <input type="file" id="productImage" name="image" accept="image/*" required>
-                                    <div class="error-message" id="productImageError">Please select a product image
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="productStatus">Status</label>
-                                    <select id="productStatus" name="status">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-actions">
-                                    <button type="reset" class="btn btn-secondary">
-                                        <i class="fas fa-redo"></i> Reset
-                                    </button>
-                                    <button type="submit" class="btn">
-                                        <i class="fas fa-save"></i> Create Product
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Existing Products List -->
-                        <div class="products-list">
-                            <h3><i class="fas fa-cubes"></i> Existing Products</h3>
-
-                            <% if (products && products.length> 0) { %>
-                                <div class="product-grid">
-                                    <% products.forEach(function(product) { %>
-                                        <div class="product-card">
-                                            <div class="product-image">
-                                                <% if (product.image) { %>
-                                                    <img src="/uploads/<%= product.image %>"
-                                                        alt="<%= product.product_name %>">
-                                                    <% } else { %>
-                                                        <i class="fas fa-cube"
-                                                            style="font-size: 3rem; color: #6c757d;"></i>
-                                                        <% } %>
-                                            </div>
-                                            <div class="product-info">
-                                                <h4>
-                                                    <%= product.product_name %>
-                                                </h4>
-                                                <div class="product-meta">
-                                                    <span class="product-price">$<%= product.price %></span>
-                                                    <span class="product-quantity">Qty: <%= product.quantity %></span>
-                                                </div>
-                                                <% if (product.color && product.color.length> 0) { %>
-                                                    <div class="product-colors">
-                                                        <% product.color.forEach(function(color) { %>
-                                                            <span class="color-badge">
-                                                                <%= color %>
-                                                            </span>
-                                                            <% }); %>
-                                                    </div>
-                                                    <% } %>
-                                                        <p>
-                                                            <%= product.description %>
-                                                        </p>
-                                                        <span
-                                                            class="product-status <%= product.status === 'active' ? 'status-active' : 'status-inactive' %>">
-                                                            <%= product.status %>
-                                                        </span>
-                                            </div>
-                                        </div>
-                                        <% }); %>
-                                </div>
-                                <% } else { %>
-                                    <p>No products found. Create your first product above.</p>
-                                    <% } %>
-                        </div>
-    </div>
-
-
+            function deleteProduct(productId) {
+                if (confirm('Are you sure you want to delete this product?')) {
+                    // Send delete request
+                    fetch(`/product/delete/${productId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Product deleted successfully!');
+                                location.reload();
+                            } else {
+                                alert('Error deleting product: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error deleting product');
+                        });
+                }
+            }
+        </script>
 </body>
 
 </html>

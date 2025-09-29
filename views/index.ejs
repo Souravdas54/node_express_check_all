@@ -1,234 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Homepage</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-   <link rel="stylesheet" href="/css/indexstyle.css">
-   <link rel="stylesheet" href="/css/navbar.css">
-</head>
+    <title>Your Store - Premium Shopping Experience</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
+    <link href="/css/indexstyle.css" rel="stylesheet">
 
+</head>
 <body>
-    <!-- Navbar will be inserted here -->
+    <!-- Navbar -->
     <%- include('./layout/navbar.ejs') %>
 
     <!-- Hero Section -->
-    <section class="hero" id="home">
+    <section class="hero-section">
         <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">Build Your Dream Website With Ease</h1>
-                    <p class="hero-subtitle">Our platform provides everything you need to create stunning websites, grow
-                        your audience, and achieve your online goals.</p>
-
-                    <div class="hero-btns">
-                        <a href="register.html" class="btn btn-primary">Get Started Free</a>
-                        <a href="#" class="btn btn-outline">Watch Demo</a>
-                    </div>
-
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">10K+</span>
-                            <span class="stat-label">Happy Customers</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">99%</span>
-                            <span class="stat-label">Satisfaction Rate</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">24/7</span>
-                            <span class="stat-label">Support</span>
-                        </div>
-                    </div>
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6 hero-content">
+                    <h1 class="hero-title">Welcome to Your Premium Shopping Destination</h1>
+                    <p class="hero-subtitle">Discover amazing products at unbeatable prices. Quality meets affordability in every purchase.</p>
+                    <button class="btn btn-hero">
+                        <i class="fas fa-shopping-bag me-2"></i>Shop Now
+                    </button>
                 </div>
-
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80"
-                        alt="Hero Image">
+                <div class="col-lg-6">
+                    <!-- Hero image would go here -->
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="section features" id="features">
+    <section class="features-section">
         <div class="container">
-            <h2 class="section-title">Amazing Features</h2>
-            <p class="section-subtitle">Discover the powerful features that will help you build, grow, and manage your
-                online presence effectively.</p>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 class="feature-title">Lightning Fast</h3>
-                    <p class="feature-desc">Our platform is optimized for speed, ensuring your website loads quickly and
-                        provides an excellent user experience.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3 class="feature-title">Fully Responsive</h3>
-                    <p class="feature-desc">Your website will look great on any device, from desktop computers to mobile
-                        phones and tablets.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="feature-title">Secure & Safe</h3>
-                    <p class="feature-desc">We prioritize security with advanced protection measures to keep your data
-                        and your visitors safe.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="section testimonials" id="testimonials">
-        <div class="container">
-            <h2 class="section-title">What Our Clients Say</h2>
-            <p class="section-subtitle">Don't just take our word for it. Here's what our satisfied customers have to say
-                about our services.</p>
-
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"This platform transformed our online presence. The ease of use and
-                        powerful features helped us grow our business exponentially."</p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson"
-                            class="author-avatar">
-                        <div class="author-info">
-                            <h4>Sarah Johnson</h4>
-                            <p>Marketing Director</p>
+            <h2 class="section-title">Why Choose Us</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shipping-fast"></i>
                         </div>
+                        <h3 class="feature-title">Free Shipping</h3>
+                        <p>Free shipping on all orders over $50. Fast and reliable delivery to your doorstep.</p>
                     </div>
                 </div>
-
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"I've tried many website builders, but this one stands out for its
-                        flexibility and excellent customer support."</p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen"
-                            class="author-avatar">
-                        <div class="author-info">
-                            <h4>Michael Chen</h4>
-                            <p>Small Business Owner</p>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
                         </div>
+                        <h3 class="feature-title">Secure Payment</h3>
+                        <p>Your payments are safe and secure with our encrypted payment processing system.</p>
                     </div>
                 </div>
-
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"The results speak for themselves. Our website traffic increased by 200%
-                        after switching to this platform."</p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Wilson"
-                            class="author-avatar">
-                        <div class="author-info">
-                            <h4>Emma Wilson</h4>
-                            <p>E-commerce Manager</p>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
                         </div>
+                        <h3 class="feature-title">24/7 Support</h3>
+                        <p>Round-the-clock customer support to help you with any questions or concerns.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="section cta">
+    <!-- Products Slider -->
+    <section class="products-slider-section">
         <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title">Ready to Get Started?</h2>
-                <p class="cta-subtitle">Join thousands of satisfied customers and create your dream website today. No
-                    credit card required.</p>
-                <a href="register.html" class="btn btn-primary">Start Free Trial</a>
+            <h2 class="section-title">Featured Products</h2>
+            <div id="productsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="product-slide">
+                                    <div class="product-image">
+                                        <i class="fas fa-laptop"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <h4>Premium Laptop</h4>
+                                        <p>High-performance laptop for professionals</p>
+                                        <div class="product-price">$999.99</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="product-slide">
+                                    <div class="product-image">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <h4>Smartphone Pro</h4>
+                                        <p>Latest smartphone with advanced features</p>
+                                        <div class="product-price">$699.99</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="product-slide">
+                                    <div class="product-image">
+                                        <i class="fas fa-headphones"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <h4>Wireless Headphones</h4>
+                                        <p>Noise-cancelling wireless headphones</p>
+                                        <div class="product-price">$199.99</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="product-slide">
+                                    <div class="product-image">
+                                        <i class="fas fa-tablet-alt"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <h4>Tablet Mini</h4>
+                                        <p>Compact tablet for on-the-go productivity</p>
+                                        <div class="product-price">$399.99</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="product-slide">
+                                    <div class="product-image">
+                                        <i class="fas fa-smartwatch"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <h4>Smart Watch</h4>
+                                        <p>Feature-rich smartwatch for fitness tracking</p>
+                                        <div class="product-price">$249.99</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="product-slide">
+                                    <div class="product-image">
+                                        <i class="fas fa-camera"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <h4>Digital Camera</h4>
+                                        <p>Professional camera for stunning photography</p>
+                                        <div class="product-price">$799.99</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productsCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productsCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Footer will be inserted here -->
-    <%- include('./layout/footer.ejs') %>
-    
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <span class="category-title">Electronics</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <span class="category-title">Fashion</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <span class="category-title">Home & Garden</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <span class="category-title">Sports</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <span class="category-title">Beauty</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <span class="category-title">Books</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Products</div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-box">
+                <h2 class="section-title mb-4">Stay Updated</h2>
+                <p class="mb-4">Subscribe to our newsletter for the latest products and exclusive offers.</p>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="email" class="form-control newsletter-input" placeholder="Enter your email">
+                            <button class="btn btn-light" type="button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Function to load HTML components
-        function loadComponent(id, file) {
-            fetch(file)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById(id).innerHTML = data;
-                    // Re-initialize any scripts that need to run after component load
-                    initializeComponents();
-                })
-                .catch(error => console.error(`Error loading ${file}:`, error));
-        }
-
-        // Initialize components after loading
-        function initializeComponents() {
-            // Mobile menu toggle
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            if (hamburger && navMenu) {
-                hamburger.addEventListener('click', function () {
-                    navMenu.classList.toggle('active');
-                    hamburger.innerHTML = navMenu.classList.contains('active') ?
-                        '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-                });
-
-                // Close mobile menu when clicking on a link
-                document.querySelectorAll('.nav-menu a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        navMenu.classList.remove('active');
-                        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-                    });
-                });
-            }
-
-            // Header scroll effect
-            window.addEventListener('scroll', function () {
-                const header = document.getElementById('header');
-                if (header && window.scrollY > 50) {
-                    header.classList.add('header-scrolled');
-                } else if (header) {
-                    header.classList.remove('header-scrolled');
-                }
-            });
-
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-        }
-
-        // Load components when page loads
-        document.addEventListener('DOMContentLoaded', function () {
-            // Load navbar and footer
-            loadComponent('navbar-container', 'navbar.html');
-            loadComponent('footer-container', 'footer.html');
+        // Auto-rotate carousel
+        const myCarousel = document.getElementById('productsCarousel');
+        const carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 3000,
+            wrap: true
         });
     </script>
 </body>
-
 </html>

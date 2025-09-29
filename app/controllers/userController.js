@@ -19,6 +19,20 @@ class AllUserController {
         })
     }
 
+    async about(req, res) {
+        res.render('about', {
+            title: 'About ',
+            user: req.user || null,
+        })
+    }
+
+      async contact(req, res) {
+        res.render('contact', {
+            title: 'Contact ',
+            user: req.user || null,
+        })
+    }
+
     async signup(req, res) {
         res.render('auth/register', {
             title: "Register",
@@ -206,7 +220,7 @@ class AllUserController {
     async signin(req, res) {
         res.render('auth/login', {
             title: 'Login',
-            // user: req.user || null,
+            user: req.user || null,
             error_msg: req.flash('error_msg'),
             success_msg: req.flash('success_msg')
         })

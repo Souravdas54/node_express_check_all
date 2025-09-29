@@ -9,6 +9,8 @@ const { userAuth, redirectUserIfAuthenticated, userLogout } = require('../middle
 const { adminAuth, redirectAdminIfAuthenticated, adminLogout } = require('../middleware/adminMiddleware')
 
 router.get('/', AllUserController.index)
+router.get('/about', AllUserController.about)
+router.get('/contact', AllUserController.contact)
 
 // REGISTER
 router.get('/register/user', AllUserController.signup)
@@ -29,7 +31,7 @@ router.post('/resend-otp', AllUserController.resend_OTP)
 router.post('/logout/user', userLogout)
 
 // User Dashboard (accessible to all authenticated users)
-router.get('/user/dashboard', userAuth,  AllUserController.user_dashboard)
+router.get('/user/dashboard', userAuth, AllUserController.user_dashboard)
 
 router.get('/admin/dashboard', adminAuth, AllUserController.admin_dashboard)
 router.post('/logout/admin', adminLogout)

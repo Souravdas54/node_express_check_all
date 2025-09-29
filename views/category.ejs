@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Category - Product Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -18,6 +21,8 @@
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
+            /* Add padding to prevent navbar overlap */
+            /* padding-top: 80px; */
         }
 
         .container {
@@ -260,9 +265,14 @@
             }
         }
 
+        /* Responsive adjustments */
         @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
             .container {
-                padding: 10px;
+                padding: 15px;
             }
 
             .navigation {
@@ -274,140 +284,160 @@
                 align-items: flex-start;
                 gap: 10px;
             }
+
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 576px) {
+            body {
+                padding-top: 60px;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            .categories-list {
+                padding: 20px;
+            }
         }
     </style>
-    <link href="/css/navbar.css" rel="stylesheet">
-
 </head>
 
 <body>
-        <!-- Navbar -->
+    <!-- Navbar -->
     <%- include('./layout/navbar.ejs') %>
-    <div class="container">
-        <header>
-            <h1>Category Management</h1>
-            <p>Create and manage product categories</p>
-        </header>
 
-        <div class="navigation">
-            <a href="/category" class="nav-btn active">
-                <i class="fas fa-tags"></i> Manage Categories
-            </a>
-            <a href="/product" class="nav-btn">
-                <i class="fas fa-cube"></i> Manage Products
-            </a>
+        <div class="container">
+            <header>
+                <h1>Category Management</h1>
+                <p>Create and manage product categories</p>
+            </header>
+
+            <div class="navigation">
+                <a href="/category" class="nav-btn active">
+                    <i class="fas fa-tags"></i> Manage Categories
+                </a>
+                <a href="/product" class="nav-btn">
+                    <i class="fas fa-cube"></i> Manage Products
+                </a>
+            </div>
+
+            <% if (success_msg && success_msg.length> 0) { %>
+                <div class="flash-message flash-success">
+                    <i class="fas fa-check-circle"></i>
+                    <span>
+                        <%= success_msg %>
+                    </span>
+                </div>
+                <% } %>
+
+                    <% if (error_msg && error_msg.length> 0) { %>
+                        <div class="flash-message flash-error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>
+                                <%= error_msg %>
+                            </span>
+                        </div>
+                        <% } %>
+
+                            <div class="form-container">
+                                <h2 class="form-title"><i class="fas fa-plus-circle"></i> Create New Category</h2>
+
+                                <form id="createCategoryForm" method="POST" action="/category/create">
+                                    <div class="form-group">
+                                        <label for="categoryName">Category Name *</label>
+                                        <input type="text" name="category_name" id="categoryName"
+                                            placeholder="Enter category name" required>
+                                        <div class="error-message" id="categoryNameError">Category name is required and
+                                            must
+                                            be unique</div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="categoryDescription">Category Description</label>
+                                        <textarea name="category_description" id="categoryDescription" rows="4"
+                                            placeholder="Enter category description"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="categoryStatus">Status</label>
+                                        <select id="categoryStatus" name="status">
+                                            <option value="active">Active</option>
+                                            <option value="inactive">Inactive</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button type="reset" class="btn btn-secondary">
+                                            <i class="fas fa-redo"></i> Reset
+                                        </button>
+                                        <button type="submit" class="btn">
+                                            <i class="fas fa-save"></i> Create Category
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Existing Categories List -->
+                            <div class="categories-list">
+                                <h3><i class="fas fa-list"></i> Existing Categories</h3>
+
+                                <% if (categories && categories.length> 0) { %>
+                                    <% categories.forEach(function(category) { %>
+                                        <div class="category-item">
+                                            <div class="category-info">
+                                                <h4>
+                                                    <%= category.category_name %>
+                                                </h4>
+                                                <% if (category.category_description) { %>
+                                                    <p>
+                                                        <%= category.category_description %>
+                                                    </p>
+                                                    <% } %>
+                                            </div>
+                                            <div
+                                                class="category-status <%= category.status === 'active' ? 'status-active' : 'status-inactive' %>">
+                                                <%= category.status %>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+                                            <% } else { %>
+                                                <p>No categories found. Create your first category above.</p>
+                                                <% } %>
+                            </div>
         </div>
 
-        <% if (success_msg && success_msg.length> 0) { %>
-            <div class="flash-message flash-success">
-                <i class="fas fa-check-circle"></i>
-                <span>
-                    <%= success_msg %>
-                </span>
-            </div>
-            <% } %>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Form validation for category
+            document.getElementById('createCategoryForm').addEventListener('submit', function (e) {
+                const categoryName = document.getElementById('categoryName').value.trim();
+                let isValid = true;
 
-                <% if (error_msg && error_msg.length> 0) { %>
-                    <div class="flash-message flash-error">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <span>
-                            <%= error_msg %>
-                        </span>
-                    </div>
-                    <% } %>
+                if (!categoryName) {
+                    document.getElementById('categoryNameError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('categoryNameError').style.display = 'none';
+                }
 
-                        <div class="form-container">
-                            <h2 class="form-title"><i class="fas fa-plus-circle"></i> Create New Category</h2>
-
-                            <form id="createCategoryForm" method="POST" action="/category/create">
-                                <div class="form-group">
-                                    <label for="categoryName">Category Name *</label>
-                                    <input type="text" name="category_name" id="categoryName"
-                                        placeholder="Enter category name" required>
-                                    <div class="error-message" id="categoryNameError">Category name is required and must
-                                        be unique</div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="categoryDescription">Category Description</label>
-                                    <textarea name="category_description" id="categoryDescription" rows="4"
-                                        placeholder="Enter category description"></textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="categoryStatus">Status</label>
-                                    <select id="categoryStatus" name="status">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-actions">
-                                    <button type="reset" class="btn btn-secondary">
-                                        <i class="fas fa-redo"></i> Reset
-                                    </button>
-                                    <button type="submit" class="btn">
-                                        <i class="fas fa-save"></i> Create Category
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Existing Categories List -->
-                        <div class="categories-list">
-                            <h3><i class="fas fa-list"></i> Existing Categories</h3>
-
-                            <% if (categories && categories.length> 0) { %>
-                                <% categories.forEach(function(category) { %>
-                                    <div class="category-item">
-                                        <div class="category-info">
-                                            <h4>
-                                                <%= category.category_name %>
-                                            </h4>
-                                            <% if (category.category_description) { %>
-                                                <p>
-                                                    <%= category.category_description %>
-                                                </p>
-                                                <% } %>
-                                        </div>
-                                        <div
-                                            class="category-status <%= category.status === 'active' ? 'status-active' : 'status-inactive' %>">
-                                            <%= category.status %>
-                                        </div>
-                                    </div>
-                                    <% }); %>
-                                        <% } else { %>
-                                            <p>No categories found. Create your first category above.</p>
-                                            <% } %>
-                        </div>
-    </div>
-
-    <script>
-        // Form validation for category
-        document.getElementById('createCategoryForm').addEventListener('submit', function (e) {
-            const categoryName = document.getElementById('categoryName').value.trim();
-            let isValid = true;
-
-            if (!categoryName) {
-                document.getElementById('categoryNameError').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('categoryNameError').style.display = 'none';
-            }
-
-            if (!isValid) {
-                e.preventDefault();
-            }
-        });
-
-        // Auto-hide flash messages after 5 seconds
-        setTimeout(() => {
-            const flashMessages = document.querySelectorAll('.flash-message');
-            flashMessages.forEach(message => {
-                message.style.display = 'none';
+                if (!isValid) {
+                    e.preventDefault();
+                }
             });
-        }, 5000);
-    </script>
+
+            // Auto-hide flash messages after 5 seconds
+            setTimeout(() => {
+                const flashMessages = document.querySelectorAll('.flash-message');
+                flashMessages.forEach(message => {
+                    message.style.display = 'none';
+                });
+            }, 5000);
+        </script>
 </body>
 
 </html>
