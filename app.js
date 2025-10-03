@@ -40,29 +40,29 @@ app.use((req, res, next) => {
 })
 
 // 404 Error Handler
-app.use((req, res, next) => {
-res.status(404).render('404', {
-    title: "Page not found",
-    message: "The page you are looking for does not exist",
-    error: {
-        status: 404,
-        stack: ''
-    }
-})
-})
+// app.use((req, res, next) => {
+// res.status(404).render('404', {
+//     title: "Page not found",
+//     message: "The page you are looking for does not exist",
+//     error: {
+//         status: 404,
+//         stack: ''
+//     }
+// })
+// })
 
 // Global Error Handler
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-res.status(err.status || 500).render('404', {
-    title: 'Error',
-    message: 'Something went wrong!',
-    error: {
-        status: err.status || 500,
-        stack: process.env.NODE_ENV === 'production' ? '' : err.stack
-    }
-});
-}); 
+// app.use((err, req, res, next) => {
+//     console.error(err.stack);
+// res.status(err.status || 500).render('404', {
+//     title: 'Error',
+//     message: 'Something went wrong!',
+//     error: {
+//         status: err.status || 500,
+//         stack: process.env.NODE_ENV === 'production' ? '' : err.stack
+//     }
+// });
+// }); 
 
 // ✅ 1. Import middleware
 const { attachUser } = require('./app/middleware/checkValidateUser');
