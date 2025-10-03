@@ -1,3 +1,99 @@
+const jwt = require('jsonwebtoken');
+
+// Verify token helper
+const verifyToken = (token) => {
+    try {
+        return jwt.verify(token, process.env.JWT_SECURITY_KEY);
+    } catch {
+        return null;
+    }
+};
+
+// Middleware to check if user is either admin or regular user
+const checkUserOrAdmin = (req, res, next) => {
+    // Check if user is logged in as regular user via cookie
+    const userToken = req.cookies?.userToken;
+    if (userToken) {
+        const user = verifyToken(userToken);
+        if (user && user.role === 'user') {
+            req.user = {
+                _id: user.userId || user._id,
+                role: user.role,
+                name: user.name,
+                email: user.email,
+                status: user.status
+            };
+            req.user.role = 'user';
+            return next();
+        }
+    }
+
+    // Check if user is logged in as admin via cookie
+    const adminToken = req.cookies?.adminToken;
+    if (adminToken) {
+        const admin = verifyToken(adminToken);
+        if (admin && admin.role === 'admin') {
+            req.user = {
+                _id: admin.userId || admin._id,
+                role: admin.role,
+                name: admin.name,
+                email: admin.email,
+                status: admin.status
+            };
+            req.user.role = 'admin';
+            return next();
+        }
+    }
+
+    // If not logged in, redirect to login page
+    req.flash('error_msg', 'Please login to access this page.');
+    res.redirect('/login/user');
+};
+
+// Middleware to attach user info to templates
+const attachUser = (req, res, next) => {
+    // Check user token first
+    const userToken = req.cookies?.userToken;
+    if (userToken) {
+        const user = verifyToken(userToken);
+        if (user && user.role === 'user') {
+            res.locals.user = {
+                _id: user.userId || user._id,
+                role: user.role,
+                name: user.name,
+                email: user.email,
+                status: user.status
+            };
+            res.locals.user.role = 'user';
+            return next();
+        }
+    }
+
+    // Check admin token
+    const adminToken = req.cookies?.adminToken;
+    if (adminToken) {
+        const admin = verifyToken(adminToken);
+        if (admin && admin.role === 'admin') {
+            res.locals.user = {
+                _id: admin.userId || admin._id,
+                role: admin.role,
+                name: admin.name,
+                email: admin.email,
+                status: admin.status
+            };
+            res.locals.user.role = 'admin';
+            return next();
+        }
+    }
+
+    // No user logged in
+    res.locals.user = null;
+    next();
+};
+
+module.exports = { checkUserOrAdmin, attachUser };
+
+
 // const jwt = require('jsonwebtoken');
 
 

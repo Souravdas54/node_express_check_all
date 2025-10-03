@@ -1,6 +1,10 @@
 const Product = require('../model/productModel')
 const Category = require('../model/category');
-const { object } = require('joi');
+
+const fs = require('fs')
+const path = require('path')
+
+const mongoose = require('mongoose')
 
 
 class AllProduct {
@@ -203,13 +207,27 @@ class AllProduct {
             }
         ])
 
+        // Determine user role for template
+        let userRole = null;
+        let userData = null;
+
+        if (req.session.user) {
+            userData = req.session.user;
+            userRole = 'user';
+        } else if (req.session.admin) {
+            userData = req.session.admin;
+            userRole = 'admin';
+        }
+
+
         // Render the product page 
         try {
             res.render('product-list', {
                 title: "Product List",
                 categories,
                 products,
-                user: req.user,
+                user: req.user, // This comes from checkUserOrAdmin middleware
+                userRole: req.user ? req.user.role : null
                 // user: req.user || null,
 
 
@@ -218,6 +236,168 @@ class AllProduct {
         } catch (error) {
             console.log(error);
 
+        }
+    }
+
+    async product_edit(req, res) {
+        const id = req.params.id;
+
+        const products = await Product.aggregate([
+            {
+                $match: { _id: new mongoose.Types.ObjectId(id) }
+            },
+            {
+                $lookup: {
+                    from: 'categories',
+                    localField: 'category_id',
+                    foreignField: '_id',
+                    as: 'category'
+                }
+            },
+            {
+                $unwind: {
+                    path: '$category',
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $project: {
+                    product_name: 1,
+                    image: 1,
+                    price: 1,
+                    color: 1,
+                    description: 1,
+                    quantity: 1,
+                    brand: 1,
+                    status: 1,
+                    category: 1
+                }
+            }
+        ])
+
+        if (products) {
+            req.flash('success-msg', "Product get successfully")
+        } else if (!product || product.length === 0) {
+            req.flash('error-msg', "The requested product was not found.")
+        }
+        try {
+            res.render('product-edit', {
+                title: 'Edit product',
+                user: req.user,
+                products,
+
+            })
+        } catch (error) {
+            console.error('Error fetching product:', error);
+            req.flash('error_msg', 'Error loading product data');
+            res.redirect('/products');
+        }
+    }
+
+    async edit_product(req, res) {
+        try {
+            const id = req.params.id;
+
+            const { product_name, price, color, description, quantity, brand, status } = req.body;
+
+            // IMAGE FILE UPLOADS 
+            const newImage = req.file ? req.file.path : null; // new image
+
+            const existingProduct = await Product.findById(id)
+
+            if (!existingProduct) {
+                return res.status(statusCode.BAD_REQUEST).json({
+                    success: false,
+                    message: 'user image not found'
+                });
+            }
+
+            const imagePath = existingProduct.image; // old image path
+
+
+            if (imagePath && fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath)
+            }
+
+
+            const updateData = {
+                product_name,
+                price: parseFloat(price),
+                color,
+                description,
+                quantity: parseInt(quantity),
+                brand,
+                status: status || 'active',
+                updatedAt: new Date()
+            }
+
+            if (newImage) {
+                updateData.image = newImage
+            }
+
+            const updateProducts = await Product.findByIdAndUpdate(id, updateData, { new: true })
+
+            if (!updateProducts) {
+                req.flash('error_msg', 'Product not found');
+                return res.redirect('/products');
+            }
+
+            // console.log('Product saved successfully:', updateProducts);
+
+            req.flash('success_msg', 'Product updated successfully!');
+
+            res.redirect('/product/edit/' + id);
+
+        } catch (error) {
+            console.error('Error updating product:', error);
+            req.flash('error_msg', 'Error updating product');
+            res.redirect('/product/edit/' + req.params.id);
+        }
+    }
+
+    async delete_product(req, res) {
+        try {
+            const productId = req.params.id;
+            // console.log('product Id is - ', productId);
+
+
+            if (!productId) {
+                req.flash('error_msg', "Product ID is required")
+                return res.render('/product')
+            }
+
+            const product = await Product.findById(productId);
+            if (!product) {
+                req.flash('error_msg', 'Product not found');
+                return res.redirect('/product');
+            }
+
+            const oldImagePath = product.image;
+            fs.unlink(oldImagePath, (err) => {
+                if (err) {
+                    console.error('Image not deleted', + err);
+                } else {
+                    console.error('Image deleted successfully');
+
+                }
+            })
+
+            const deleteProduct = await Product.findByIdAndDelete(productId)
+
+            if (!deleteProduct) {
+                req.flash('error_msg', 'Product not found')
+                return res.render('/product')
+            }
+
+            console.log('Product deleted successfully', deleteProduct._id);
+
+            req.flash('success_msg', 'Product deleted successfully')
+            return res.render('/product')
+
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            req.flash('error_msg', 'Error deleting product');
+            res.redirect('/product');
         }
     }
 }

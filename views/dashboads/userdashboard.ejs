@@ -868,15 +868,15 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">Phone:</span>
-                        <span class="info-value"><%= user.phone || '+1 (555) 123-4567' %></span>
+                        <span class="info-value"><%= user.phone %></span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Location:</span>
-                        <span class="info-value"><%= user.city || 'New York, USA' %></span>
+                        <span class="info-value"><%= user.city  %></span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Member Since:</span>
-                        <span class="info-value"><%= user.joinDate || 'January 2023' %></span>
+                        <span class="info-value"><%= user.joinDate  %></span>
                     </div>
                 </div>
                 
@@ -915,7 +915,8 @@
 
         <div class="sidebar-menu">
             <ul>
-                <li><a href="#" class="active"><i class="fas fa-home"></i> <span class="menu-text">Dashboard</span></a></li>
+                <li><a href="/user/dashboard" class="active"><i class="fas fa-tachometer-alt"></i></i> <span class="menu-text">Dashboard</span></a></li>
+                <li><a href="/"><i class="fas fa-home"></i> <span class="menu-text">Home</span></a></li>
                 <li><a href="#" id="profileLink"><i class="fas fa-user-edit"></i> <span class="menu-text">Profile</span></a></li>
                 <li><a href="#"><i class="fas fa-history"></i> <span class="menu-text">Activity</span></a></li>
                 <li><a href="#"><i class="fas fa-project-diagram"></i> <span class="menu-text">Projects</span></a></li>

@@ -770,7 +770,7 @@
                                                     <i class="fas fa-edit"></i> Edit
                                                 </button>
                                                 <button class="btn btn-delete"
-                                                    onclick="deleteProduct('<%= product._id %>')">
+                                                    onclick="deleteProductEnhanced('<%= product._id %>')">
                                                     <i class="fas fa-trash"></i> Delete
                                                 </button>
                                             </div>
@@ -788,33 +788,266 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script>
+            console.log('Flash messages on page load:');
+            console.log('Success:', '<%= success_msg %>');
+            console.log('Error:', '<%= error_msg %>');
+            // Delete product function without alerts
+            async function deleteProduct(productId) {
+                const deleteBtn = event?.target;
+                const originalText = deleteBtn?.innerHTML;
+
+                // Show loading state
+                if (deleteBtn) {
+                    deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
+                    deleteBtn.disabled = true;
+                }
+
+                try {
+                    const response = await fetch(`/product/delete/${productId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'same-origin' // Important for sessions
+                    });
+
+                    console.log('Response status:', response.status);
+                    console.log('Response redirected:', response.redirected);
+
+                    // If server redirects (which it should for flash messages), follow the redirect
+                    if (response.redirected) {
+                        console.log('Redirecting to:', response.url);
+                        window.location.href = response.url;
+                        return;
+                    }
+
+                    // If we get a JSON response (alternative approach)
+                    if (response.ok) {
+                        try {
+                            const data = await response.json();
+                            if (data.success) {
+                                // Remove product card with animation
+                                const productCard = deleteBtn.closest('.product-card');
+                                if (productCard) {
+                                    productCard.style.transition = 'all 0.3s ease';
+                                    productCard.style.opacity = '0';
+                                    productCard.style.transform = 'translateY(-20px)';
+
+                                    setTimeout(() => {
+                                        productCard.remove();
+                                        checkEmptyState();
+                                    }, 300);
+                                }
+                                // Flash message will be shown after page reload
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 500);
+                            }
+                        } catch (jsonError) {
+                            // If not JSON, assume redirect should happen
+                            window.location.reload();
+                        }
+                    } else {
+                        // If error, reload to show error flash message
+                        window.location.reload();
+                    }
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    // Restore button and reload to potentially show error message
+                    if (deleteBtn) {
+                        deleteBtn.innerHTML = originalText;
+                        deleteBtn.disabled = false;
+                    }
+                    window.location.reload();
+                }
+            }
+
+            // Edit product function
             function editProduct(productId) {
-                // Redirect to edit page or open edit modal
+                // Show loading state on the button
+                const editBtn = event?.target;
+                const originalText = editBtn?.innerHTML;
+
+                if (editBtn) {
+                    editBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                    editBtn.disabled = true;
+                }
+
+                // Redirect to edit page
                 window.location.href = `/product/edit/${productId}`;
             }
 
-            function deleteProduct(productId) {
-                if (confirm('Are you sure you want to delete this product?')) {
-                    // Send delete request
-                    fetch(`/product/delete/${productId}`, {
+            // Toast notification function
+            function showToast(message, type = 'info') {
+                // Remove existing toasts
+                const existingToasts = document.querySelectorAll('.custom-toast');
+                existingToasts.forEach(toast => toast.remove());
+
+                const toast = document.createElement('div');
+                toast.className = `custom-toast toast-${type}`;
+                toast.innerHTML = `
+        <div class="toast-content">
+            <i class="fas ${type === 'Success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+
+                // Add styles if not already added
+                if (!document.querySelector('#toast-styles')) {
+                    const styles = document.createElement('style');
+                    styles.id = 'toast-styles';
+                    styles.textContent = `
+            .custom-toast {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                border-radius: 8px;
+                color: white;
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+                max-width: 300px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            .toast-success { 
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                border-left: 4px solid #047857;
+            }
+            .toast-error { 
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                border-left: 4px solid #b91c1c;
+            }
+            .toast-info { 
+                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                border-left: 4px solid #1d4ed8;
+            }
+            .toast-content {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-weight: 500;
+            }
+            .toast-content i {
+                font-size: 1.1rem;
+            }
+            @keyframes slideInRight {
+                from { 
+                    transform: translateX(100%); 
+                    opacity: 0; 
+                }
+                to { 
+                    transform: translateX(0); 
+                    opacity: 1; 
+                }
+            }
+            @keyframes slideOutRight {
+                from { 
+                    transform: translateX(0); 
+                    opacity: 1; 
+                }
+                to { 
+                    transform: translateX(100%); 
+                    opacity: 0; 
+                }
+            }
+        `;
+                    document.head.appendChild(styles);
+                }
+
+                document.body.appendChild(toast);
+
+                // Auto remove after 4 seconds
+                setTimeout(() => {
+                    toast.style.animation = 'slideOutRight 0.3s ease';
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            toast.remove();
+                        }
+                    }, 300);
+                }, 4000);
+            }
+
+            // Check if products list is empty
+            function checkEmptyState() {
+                const productGrid = document.querySelector('.product-grid');
+                const productsList = document.querySelector('.products-list');
+
+                if (productGrid && productGrid.children.length === 0) {
+                    const emptyState = document.createElement('div');
+                    emptyState.className = 'empty-state';
+                    emptyState.innerHTML = `
+            <div style="text-align: center; padding: 60px 20px; color: #6c757d;">
+                <i class="fas fa-box-open" style="font-size: 4rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                <h3 style="margin-bottom: 10px; color: #495057;">No Products Found</h3>
+                <p>All products have been deleted. Create a new product to get started.</p>
+            </div>
+        `;
+                    productGrid.appendChild(emptyState);
+                }
+            }
+
+            // Enhanced version with better error handling for API response
+            async function deleteProductEnhanced(productId) {
+                const deleteBtn = event?.target;
+                const originalText = deleteBtn?.innerHTML;
+
+                // Show loading state
+                if (deleteBtn) {
+                    deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                    deleteBtn.disabled = true;
+                }
+
+                try {
+                    const response = await fetch(`/product/delete/${productId}`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
                         }
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                alert('Product deleted successfully!');
-                                location.reload();
-                            } else {
-                                alert('Error deleting product: ' + data.message);
+                    });
+
+                    // Handle redirect response (for flash messages)
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                        return;
+                    }
+
+                    // Handle JSON response
+                    if (response.ok) {
+                        const data = await response.json();
+
+                        if (data.success) {
+                            showToast('Product deleted successfully!', 'Success');
+
+                            // Smooth removal animation
+                            const productCard = deleteBtn.closest('.product-card');
+                            if (productCard) {
+                                productCard.style.transition = 'all 0.4s ease';
+                                productCard.style.opacity = '0';
+                                productCard.style.transform = 'scale(0.8) translateY(20px)';
+
+                                setTimeout(() => {
+                                    productCard.remove();
+                                    checkEmptyState();
+                                }, 400);
                             }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Error deleting product');
-                        });
+                        } else {
+                            throw new Error(data.message || 'Failed to delete product');
+                        }
+                    } else {
+                        throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+                    }
+
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    showToast('Error deleting product. Please try again.', 'error');
+
+                    // Restore button state
+                    if (deleteBtn) {
+                        deleteBtn.innerHTML = originalText;
+                        deleteBtn.disabled = false;
+                    }
                 }
             }
         </script>

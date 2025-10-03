@@ -8,6 +8,7 @@ const { userAuth, redirectUserIfAuthenticated, userLogout } = require('../middle
 
 const { adminAuth, redirectAdminIfAuthenticated, adminLogout } = require('../middleware/adminMiddleware')
 
+
 router.get('/', AllUserController.index)
 router.get('/about', AllUserController.about)
 router.get('/contact', AllUserController.contact)
@@ -33,10 +34,14 @@ router.post('/logout/user', userLogout)
 // User Dashboard (accessible to all authenticated users)
 router.get('/user/dashboard', userAuth, AllUserController.user_dashboard)
 
+router.post('/logout/user', userLogout)
+
+// Admin Dashboard 
 router.get('/admin/dashboard', adminAuth, AllUserController.admin_dashboard)
+
 router.post('/logout/admin', adminLogout)
 
-// router.post('/admin/logout', AllUserController.admin_logout)
+// router.post('/logout', AllUserController.logout)
 
 
 

@@ -64,11 +64,18 @@ app.use((req, res, next) => {
 // });
 // }); 
 
+// ✅ 1. Import middleware
+const { attachUser } = require('./app/middleware/checkValidateUser');
+
+// ✅ 2. Use BEFORE your routes
+app.use(attachUser);
+
 const userRouter = require('./app/router/userRouter')
 app.use(userRouter)
 
 const categoryRouter = require('./app/router/productRouter')
 app.use(categoryRouter)
+
 
 app.listen(process.env.PORT, () => {
     console.log(`Server running http://localhost:${process.env.PORT}`);

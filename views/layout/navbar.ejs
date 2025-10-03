@@ -15,59 +15,103 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/product">Products</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/category">Categories</a>
-                </li>
+
+                <!-- Show Products List to ALL users (logged in or not) -->
                 <li class="nav-item">
                     <a class="nav-link" href="/product/details">Products List</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contact</a>
-                </li>
+
+                <!-- Admin-only links -->
+                <% if (user && user.role==='admin' ) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/product">Manage Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/category">Manage Categories</a>
+                    </li>
+                    <% } %>
+
+                        <!-- Common menu items for all users -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contact">Contact</a>
+                        </li>
             </ul>
 
             <ul class="navbar-nav ms-auto">
                 <% if (user) { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cart">
-                            <i class="fas fa-shopping-cart"></i> Cart
-                            <span class="badge bg-primary">3</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            <i class="fas fa-user"></i>
-                            <%= user.name || user.email %>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="/admin/dashboard"><i
-                                        class="fas fa-user-circle me-2"></i>Profile</a></li>
-                            <li><a class="dropdown-item" href="/orders"><i
-                                        class="fas fa-clipboard-list me-2"></i>Orders</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><form action="/logout/admin" method="POST">
-
-                                <a class="dropdown-item" href="/logout/admin"><i
-                                    class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-                                </form>
-                        </ul>
-                    </li>
-                    <% } else { %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login/user"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/register/user"><i class="fas fa-user-plus me-1"></i>Register</a>
-                        </li>
+                    <!-- Show cart only for regular users -->
+                    <% if (user.role==='user' ) { %>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="/cart">
+                                <i class="fas fa-shopping-cart"></i> Cart
+                                <span class="badge bg-primary">3</span>
+                            </a>
+                        </li> -->
                         <% } %>
+
+                            <!-- User dropdown - shows for both user and admin -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user me-1"></i>
+                                    <%= user.name || user.email %>
+                                        <% if (user.role==='admin' ) { %>
+                                            <!-- <small class="text-warning">(Admin)</small> -->
+                                            <% } %>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <!-- Different dashboard links based on user role -->
+                                    <% if (user.role==='user' ) { %>
+                                        <li><a class="dropdown-item" href="/user/dashboard">
+                                                <i class="fas fa-user-circle me-2"></i>Profile
+                                            </a></li>
+                                        <li><a class="dropdown-item" href="/orders">
+                                                <i class="fas fa-clipboard-list me-2"></i>Orders
+                                            </a></li>
+                                        <% } else if (user.role==='admin' ) { %>
+                                            <li><a class="dropdown-item" href="/admin/dashboard">
+                                                    <i class="fas fa-user-circle me-2"></i>Admin Dashboard
+                                                </a></li>
+                                            <% } %>
+
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li>
+                                                    <!-- Dynamic logout form based on role -->
+                                                    <% if (user.role==='user' ) { %>
+                                                        <form action="/logout/user" method="POST"
+                                                            class="d-inline w-100">
+                                                            <% } else if (user.role==='admin' ) { %>
+                                                                <form action="/logout/admin" method="POST"
+                                                                    class="d-inline w-100">
+                                                                    <% } %>
+                                                                        <button type="submit"
+                                                                            class="dropdown-item border-0 bg-transparent w-100 text-start">
+                                                                            <i
+                                                                                class="fas fa-sign-out-alt me-2"></i>Logout
+                                                                        </button>
+                                                                </form>
+                                                </li>
+                                </ul>
+                            </li>
+                            <% } else { %>
+                                <!-- Show login/register for guests -->
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login/user">
+                                        <i class="fas fa-sign-in-alt me-1"></i>Login
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/register/user">
+                                        <i class="fas fa-user-plus me-1"></i>Register
+                                    </a>
+                                </li>
+                                
+                                <% } %>
+                                
             </ul>
         </div>
     </div>

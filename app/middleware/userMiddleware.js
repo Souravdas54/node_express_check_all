@@ -25,14 +25,14 @@ const userAuth = (req, res, next) => {
         return res.redirect('/login/user');
     }
 
-    // req.user = user;
-    req.user = {
-        _id: user.userId || user._id,
-        role: user.role || user.role,
-        name: user.name || user.name,
-        email: user.email || user.email,
-        status: user.status || user.status
-    };
+    req.user = user;
+    // req.user = {
+    //     _id: user.userId || user._id,
+    //     role: user.role || user.role,
+    //     name: user.name || user.name,
+    //     email: user.email || user.email,
+    //     status: user.status || user.status
+    // };
     next();
 };
 

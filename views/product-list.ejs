@@ -501,11 +501,11 @@
                                     <span id="modalProductStatus" class="badge bg-success ms-2"></span>
                                 </div>
 
-                                <div class="d-grid gap-2">
+                                <!-- <div class="d-grid gap-2">
                                     <button class="btn btn-cart btn-lg" id="modalAddToCart">
                                         <i class="fas fa-shopping-cart"></i> Add to Cart
                                     </button>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -674,16 +674,16 @@
                     }
 
                     // Update add to cart button
-                    const addToCartBtn = document.getElementById('modalAddToCart');
-                    if (quantity > 0) {
-                        addToCartBtn.disabled = false;
-                        addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
-                        addToCartBtn.onclick = (e) => addToCart(e, productId);
-                    } else {
-                        addToCartBtn.disabled = true;
-                        addToCartBtn.innerHTML = 'Out of Stock';
-                        addToCartBtn.onclick = null;
-                    }
+                    // const addToCartBtn = document.getElementById('modalAddToCart');
+                    // if (quantity > 0) {
+                    //     addToCartBtn.disabled = false;
+                    //     addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+                    //     addToCartBtn.onclick = (e) => addToCart(e, productId);
+                    // } else {
+                    //     addToCartBtn.disabled = true;
+                    //     addToCartBtn.innerHTML = 'Out of Stock';
+                    //     addToCartBtn.onclick = null;
+                    // }
 
                 } catch (error) {
                     console.error('Error loading product details:', error);
@@ -691,33 +691,33 @@
             }
 
             // Add to cart
-            function addToCart(event, productId) {
-                const btn = event.currentTarget;
-                const originalText = btn.innerHTML;
+            // function addToCart(event, productId) {
+            //     const btn = event.currentTarget;
+            //     const originalText = btn.innerHTML;
 
-                btn.innerHTML = '<span class="loading"></span> Adding...';
-                btn.disabled = true;
+            //     btn.innerHTML = '<span class="loading"></span> Adding...';
+            //     btn.disabled = true;
 
-                // Simulate API call
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fas fa-check"></i> Added!';
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.disabled = false;
-                    }, 2000);
+            //     // Simulate API call
+            //     setTimeout(() => {
+            //         btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+            //         setTimeout(() => {
+            //             btn.innerHTML = originalText;
+            //             btn.disabled = false;
+            //         }, 2000);
 
-                    // Show success message
-                    const toast = document.createElement('div');
-                    toast.className = 'alert alert-success position-fixed top-0 end-0 m-3';
-                    toast.style.zIndex = '9999';
-                    toast.textContent = 'Product added to cart successfully!';
-                    document.body.appendChild(toast);
+            //         // Show success message
+            //         const toast = document.createElement('div');
+            //         toast.className = 'alert alert-success position-fixed top-0 end-0 m-3';
+            //         toast.style.zIndex = '9999';
+            //         toast.textContent = 'Product added to cart successfully!';
+            //         document.body.appendChild(toast);
 
-                    setTimeout(() => {
-                        toast.remove();
-                    }, 3000);
-                }, 1000);
-            }
+            //         setTimeout(() => {
+            //             toast.remove();
+            //         }, 3000);
+            //     }, 1000);
+            // }
         </script>
 </body>
 

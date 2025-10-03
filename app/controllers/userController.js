@@ -234,7 +234,7 @@ class AllUserController {
 
             // Validation
             if (!email || !password) {
-                req.flash('error', 'Please provide both email and password');
+                req.flash('error_msg', 'Please provide both email and password');
                 return res.redirect('/login/user');
             }
 
@@ -243,13 +243,13 @@ class AllUserController {
 
             // Check if user exists
             if (!user) {
-                req.flash('error', 'Invalid email or password');
+                req.flash('error_msg', 'Invalid email or password');
                 return res.redirect('/login/user');
             }
 
             // Check if user is verified
             if (!user.is_verified) {
-                req.flash('error', 'Please verify your email before logging in');
+                req.flash('error_msg', 'Please verify your email before logging in');
                 return res.redirect('/login/user');
             }
 
@@ -262,7 +262,7 @@ class AllUserController {
                 user.last_failed_login = new Date();
                 await user.save();
 
-                req.flash('error', 'Invalid email or password');
+                req.flash('error_msg', 'Invalid email or password');
                 return res.redirect('/login/user');
             }
 
@@ -301,7 +301,7 @@ class AllUserController {
                     maxAge: 24 * 60 * 60 * 1000 // 24 hours
                     // maxAge: 30 * 60 * 1000 // 30 minutes
                 });
-                req.flash('success', `Welcome back, ${user.name || 'Admin'}!`);
+                req.flash('success_msg', `Welcome back, ${user.name || 'Admin'}!`);
                 console.log('Setting admin cookie and redirecting...');
                 return res.redirect('/admin/dashboard');
             } else {
@@ -310,14 +310,14 @@ class AllUserController {
                     secure: false, // Set to false for development
                     maxAge: 24 * 60 * 60 * 1000
                 });
-                req.flash('success', `Welcome back, ${user.name || 'User'}!`);
+                req.flash('success_msg', `Welcome back, ${user.name || 'User'}!`);
                 console.log('Setting user cookie and redirecting...');
                 return res.redirect('/user/dashboard');
             }
 
         } catch (error) {
             console.error('Login error:', error);
-            req.flash('error', 'Server error during login. Please try again.');
+            req.flash('error_msg', 'Server error during login. Please try again.');
             return res.redirect('/login/user');
         }
     }
@@ -337,6 +337,7 @@ class AllUserController {
 
     // In your controller
     async user_dashboard(req, res) {
+        
         try {
             // console.log('User image path:', req.user?.image);
 
