@@ -24,8 +24,6 @@
             background-color: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.6;
-            /* Add padding to prevent navbar overlap */
-            /* padding-top: 80px; */
         }
 
         /* Hero Section */
@@ -34,6 +32,24 @@
             color: white;
             padding: 80px 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.50;
+        }
+
+        .contact-hero .container {
+            position: relative;
+            z-index: 1;
         }
 
         .contact-hero h1 {
@@ -174,6 +190,23 @@
             justify-content: center;
             color: white;
             font-size: 1.2rem;
+            position: relative;
+        }
+
+        .map-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1542744095-291d1f67b221?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.8;
+        }
+
+        .map-container .text-center {
+            position: relative;
+            z-index: 1;
         }
 
         /* FAQ Section */
@@ -224,6 +257,62 @@
 
         .faq-item.active .faq-toggle {
             transform: rotate(180deg);
+        }
+
+        /* Support Team Section */
+        .support-team-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .team-role {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .team-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Office Images Section */
+        .office-section {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .office-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 2rem;
         }
 
         /* Responsive Design */
@@ -284,6 +373,11 @@
             .btn-primary {
                 padding: 12px 30px;
                 font-size: 1rem;
+            }
+
+            .support-team-section,
+            .office-section {
+                padding: 60px 0;
             }
         }
 
@@ -505,6 +599,64 @@
             </div>
         </section>
 
+        <!-- Support Team Section -->
+        <section class="support-team-section">
+            <div class="container">
+                <h2 class="section-title text-center">Our Support Team</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="team-member">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                                alt="Customer Support" class="team-avatar">
+                            <h4 class="team-name">Emily Johnson</h4>
+                            <div class="team-role">Customer Support Manager</div>
+                            <p class="team-description">Emily leads our customer support team and ensures every customer
+                                receives exceptional service and timely responses.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="team-member">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1976&q=80"
+                                alt="Technical Support" class="team-avatar">
+                            <h4 class="team-name">Michael Chen</h4>
+                            <div class="team-role">Technical Support Specialist</div>
+                            <p class="team-description">Michael specializes in resolving technical issues and providing
+                                guidance on product features and functionality.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="team-member">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1961&q=80"
+                                alt="Sales Support" class="team-avatar">
+                            <h4 class="team-name">Sarah Williams</h4>
+                            <div class="team-role">Sales Support Coordinator</div>
+                            <p class="team-description">Sarah assists with product inquiries, order processing, and
+                                ensures a smooth purchasing experience for all customers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Office Images Section -->
+        <section class="office-section">
+            <div class="container">
+                <h2 class="section-title text-center">Our Office</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="office-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80')">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="office-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80')">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Map Section -->
         <section class="map-section">
             <div class="container">
@@ -585,88 +737,88 @@
             </div>
         </section>
 
-    <%- include('./layout/footer.ejs') %>
+        <%- include('./layout/footer.ejs') %>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            // FAQ Toggle
-            document.querySelectorAll('.faq-question').forEach(question => {
-                question.addEventListener('click', () => {
-                    const faqItem = question.parentElement;
-                    faqItem.classList.toggle('active');
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+                // FAQ Toggle
+                document.querySelectorAll('.faq-question').forEach(question => {
+                    question.addEventListener('click', () => {
+                        const faqItem = question.parentElement;
+                        faqItem.classList.toggle('active');
+                    });
                 });
-            });
 
-            // Contact Form Submission
-            document.getElementById('contactForm').addEventListener('submit', function (e) {
-                e.preventDefault();
+                // Contact Form Submission
+                document.getElementById('contactForm').addEventListener('submit', function (e) {
+                    e.preventDefault();
 
-                // Simulate form submission
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
+                    // Simulate form submission
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
 
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
-                submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+                    submitBtn.disabled = true;
 
-                setTimeout(() => {
-                    // Show success message
-                    const successAlert = document.createElement('div');
-                    successAlert.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-5';
-                    successAlert.style.zIndex = '9999';
-                    successAlert.innerHTML = `
+                    setTimeout(() => {
+                        // Show success message
+                        const successAlert = document.createElement('div');
+                        successAlert.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-5';
+                        successAlert.style.zIndex = '9999';
+                        successAlert.innerHTML = `
                     <div class="d-flex align-items-center">
                         <i class="fas fa-check-circle me-2"></i>
                         <span>Thank you for your message! We will get back to you soon.</span>
                     </div>
                 `;
-                    document.body.appendChild(successAlert);
+                        document.body.appendChild(successAlert);
 
-                    // Reset form
-                    this.reset();
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
+                        // Reset form
+                        this.reset();
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
 
-                    // Remove alert after 5 seconds
-                    setTimeout(() => {
-                        successAlert.remove();
-                    }, 5000);
-                }, 2000);
-            });
-
-            // Add animation on scroll
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
-                    }
+                        // Remove alert after 5 seconds
+                        setTimeout(() => {
+                            successAlert.remove();
+                        }, 5000);
+                    }, 2000);
                 });
-            }, observerOptions);
 
-            // Observe elements for animation
-            document.querySelectorAll('.contact-info-card, .contact-form-container').forEach(el => {
-                observer.observe(el);
-            });
+                // Add animation on scroll
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
 
-            // Add placeholder functionality for better UX
-            document.addEventListener('DOMContentLoaded', function () {
-                const inputs = document.querySelectorAll('input, textarea, select');
-                inputs.forEach(input => {
-                    input.addEventListener('focus', function () {
-                        this.parentElement.classList.add('focused');
-                    });
-                    input.addEventListener('blur', function () {
-                        if (!this.value) {
-                            this.parentElement.classList.remove('focused');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
                         }
                     });
+                }, observerOptions);
+
+                // Observe elements for animation
+                document.querySelectorAll('.contact-info-card, .contact-form-container, .team-member, .office-image').forEach(el => {
+                    observer.observe(el);
                 });
-            });
-        </script>
+
+                // Add placeholder functionality for better UX
+                document.addEventListener('DOMContentLoaded', function () {
+                    const inputs = document.querySelectorAll('input, textarea, select');
+                    inputs.forEach(input => {
+                        input.addEventListener('focus', function () {
+                            this.parentElement.classList.add('focused');
+                        });
+                        input.addEventListener('blur', function () {
+                            if (!this.value) {
+                                this.parentElement.classList.remove('focused');
+                            }
+                        });
+                    });
+                });
+            </script>
 </body>
 
 </html>

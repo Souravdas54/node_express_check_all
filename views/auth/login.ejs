@@ -9,62 +9,231 @@
     </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/indexstyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="/css/navbar.css" rel="stylesheet">
+    <link href="/css/footer.css" rel="stylesheet">
     <style>
-        /* Background image styling */
+        /* Background styling */
         body {
-            background-image: url('https://plus.unsplash.com/premium_photo-1661602375984-ab806edced67?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: #f8f9fa;
+            background-image: none;
             min-height: 100vh;
             position: relative;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
         }
 
-        /* Overlay to improve readability */
+        /* Remove overlay */
         body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.85);
-            z-index: -1;
+            display: none;
         }
 
         /* Container adjustments */
         .container.mt-3 {
             position: relative;
             z-index: 1;
+            max-width: 1200px;
         }
 
-        /* Left side image styling */
-        .login-image-container {
+        /* Left side quote section */
+        .quote-section {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            padding: 20px;
-
-        }
-
-        .login-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-
-        }
-
-        /* Card styling for better visibility */
-        .card {
-            border: none;
-            border-radius: 10px;
+            align-items: flex-start;
+            padding: 40px;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            color: white;
+            position: relative;
             overflow: hidden;
         }
 
-        .card-header {
-            border-radius: 0 !important;
+        .quote-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 0;
+        }
+
+        .quote-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-image {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 70%;
+            opacity: 0.8;
+            z-index: 0;
+        }
+
+        .quote-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .quote-subtitle {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .quote-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 90%;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2rem;
+        }
+
+        /* Login form styling */
+        .login-form-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            height: 100%;
+            position: relative;
+            /* margin-top: 20px; */
+        }
+
+        .form-image {
+            /* position: absolute; */
+            top: -30px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .instruction-text {
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #e1e5ee;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.1);
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .checkbox-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-check {
+            margin-bottom: 0;
+        }
+
+        .form-check-input {
+            margin-right: 8px;
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            border-color: #3498db;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-weight: 600;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .google-btn {
+            background-color: white;
+            color: #5f6368;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-weight: 500;
+            font-size: 16px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .google-btn:hover {
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: #5f6368;
+        }
+
+        .google-icon {
+            margin-right: 10px;
+            font-size: 18px;
+            color: #4285f4;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #7f8c8d;
+        }
+
+        .signup-link a {
+            color: #3498db;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
         }
 
         /* Flash message styles */
@@ -113,6 +282,382 @@
             margin-left: 10px;
             float: right;
         }
+
+        /* ========== RESPONSIVE MEDIA QUERIES ========== */
+
+        /* XX-Small devices (phones, less than 376px) */
+        @media (max-width: 375.98px) {
+            .container.mt-4 {
+                padding-left: 10px;
+                padding-right: 10px;
+                margin-top: 1rem !important;
+            }
+
+            .quote-section {
+                padding: 20px 15px;
+                text-align: center;
+                align-items: center;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+            }
+
+            .quote-title {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .quote-subtitle {
+                font-size: 1.25rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .quote-text {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+                max-width: 100%;
+            }
+
+            .brand-name {
+                font-size: 1.1rem;
+                margin-top: 1rem;
+            }
+
+            .login-form-container {
+                padding: 25px 20px;
+                border-radius: 8px;
+            }
+
+            .form-image {
+                position: relative;
+                top: 0;
+                right: 0;
+                width: 70px;
+                height: 70px;
+                margin: -45px auto 15px;
+                display: block;
+            }
+
+            .welcome-text {
+                font-size: 1.4rem;
+                text-align: center;
+            }
+
+            .instruction-text {
+                font-size: 0.9rem;
+                text-align: center;
+                margin-bottom: 1.5rem;
+            }
+
+            .checkbox-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .form-control {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .btn-primary,
+            .google-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .quote-image {
+                width: 100%;
+                opacity: 0.3;
+            }
+        }
+
+        /* X-Small devices (phones, 376px to 575px) */
+        @media (min-width: 376px) and (max-width: 575.98px) {
+            .container.mt-4 {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .quote-section {
+                padding: 25px 20px;
+                text-align: center;
+                align-items: center;
+                margin-bottom: 1.5rem;
+            }
+
+            .quote-title {
+                font-size: 1.75rem;
+            }
+
+            .quote-subtitle {
+                font-size: 1.4rem;
+            }
+
+            .quote-text {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+
+            .login-form-container {
+                padding: 30px 25px;
+            }
+
+            .form-image {
+                position: relative;
+                top: 0;
+                right: 0;
+                width: 80px;
+                height: 80px;
+                margin: -40px auto 20px;
+                display: block;
+            }
+
+            .welcome-text {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            .instruction-text {
+                text-align: center;
+            }
+
+            .checkbox-group {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+
+        /* Small devices (landscape phones, 576px to 767px) */
+        @media (min-width: 576px) and (max-width: 767.98px) {
+            .container.mt-4 {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .quote-section {
+                padding: 30px 25px;
+                margin-bottom: 2rem;
+            }
+
+            .quote-title {
+                font-size: 2rem;
+            }
+
+            .quote-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .login-form-container {
+                padding: 35px 30px;
+            }
+
+            .form-image {
+                width: 100px;
+                height: 100px;
+                top: -25px;
+                right: -25px;
+            }
+        }
+
+        /* Medium devices (tablets, 768px to 991px) */
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            .container.mt-4 {
+                max-width: 95%;
+            }
+
+            .quote-section {
+                padding: 35px 30px;
+            }
+
+            .quote-title {
+                font-size: 2.25rem;
+            }
+
+            .quote-subtitle {
+                font-size: 1.6rem;
+            }
+
+            .login-form-container {
+                padding: 40px 35px;
+            }
+
+            .form-image {
+                width: 110px;
+                height: 110px;
+            }
+        }
+
+        /* Large devices (desktops, 992px to 1199px) */
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .container.mt-4 {
+                max-width: 1140px;
+            }
+
+            .quote-section {
+                padding: 40px 35px;
+            }
+
+            .login-form-container {
+                padding: 45px 40px;
+            }
+
+            .form-image {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        /* X-Large devices (large desktops, 1200px to 1399px) */
+        @media (min-width: 1200px) and (max-width: 1399.98px) {
+            .container.mt-4 {
+                max-width: 1320px;
+            }
+
+            .quote-section {
+                padding: 50px 40px;
+            }
+
+            .quote-title {
+                font-size: 2.75rem;
+            }
+
+            .quote-subtitle {
+                font-size: 1.9rem;
+            }
+
+            .quote-text {
+                font-size: 1.15rem;
+            }
+
+            .login-form-container {
+                padding: 50px 45px;
+            }
+
+            .form-image {
+                width: 130px;
+                height: 130px;
+                top: -35px;
+                right: -35px;
+            }
+        }
+
+        /* XX-Large devices (larger desktops, 1400px and up) */
+        @media (min-width: 1400px) {
+            .container.mt-4 {
+                max-width: 1500px;
+            }
+
+            .quote-section {
+                padding: 60px 50px;
+            }
+
+            .quote-title {
+                font-size: 3rem;
+            }
+
+            .quote-subtitle {
+                font-size: 2rem;
+            }
+
+            .quote-text {
+                font-size: 1.2rem;
+            }
+
+            .brand-name {
+                font-size: 1.75rem;
+            }
+
+            .login-form-container {
+                padding: 60px 50px;
+            }
+
+            .welcome-text {
+                font-size: 2rem;
+            }
+
+            .instruction-text {
+                font-size: 1.1rem;
+            }
+
+            .form-image {
+                width: 140px;
+                height: 140px;
+                top: -40px;
+                right: -40px;
+            }
+
+            .form-control {
+                padding: 14px 18px;
+                font-size: 17px;
+            }
+
+            .btn-primary,
+            .google-btn {
+                padding: 14px 35px;
+                font-size: 17px;
+            }
+        }
+
+        /* Height-based adjustments for very tall screens */
+        @media (min-height: 900px) {
+
+            .quote-section,
+            .login-form-container {
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+
+            .container.mt-4 .row {
+                min-height: 70vh;
+            }
+        }
+
+        @media (min-height: 1200px) {
+
+            .quote-section,
+            .login-form-container {
+                padding-top: 6rem;
+                padding-bottom: 6rem;
+            }
+
+            .container.mt-4 .row {
+                min-height: 60vh;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .quote-section {
+                background: #f8f9fa !important;
+                color: #000 !important;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .btn-primary,
+            .google-btn {
+                border: 1px solid #000 !important;
+                background: white !important;
+                color: #000 !important;
+            }
+
+            .form-image,
+            .quote-image {
+                display: none;
+            }
+        }
+
+        /* Orientation-specific adjustments */
+        @media (max-width: 767.98px) and (orientation: landscape) {
+            .container.mt-4 .row {
+                min-height: 120vh;
+            }
+
+            .quote-section,
+            .login-form-container {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+        }
     </style>
 </head>
 
@@ -154,66 +699,130 @@
                     </script>
                     <% } %>
 
-
-                        <div class="container mt-3">
-                            <div class="row justify-content-center">
-                                <!-- Left side image - visible on all screen sizes -->
-                                <div class="col-md-6 col-lg-5 d-flex align-items-center mb-4 mb-md-0">
-                                    <div class="login-image-container">
-                                        <img src="https://static.vecteezy.com/system/resources/previews/010/925/681/non_2x/enter-login-and-password-registration-page-on-screen-sign-in-to-your-account-creative-metaphor-login-page-mobile-app-with-user-page-identification-in-internet-vector.jpg"
-                                            alt="E-commerce Shopping" class="login-image">
+                        <div class="container mt-4 mb-4">
+                            <div class="row justify-content-center align-items-stretch" style="min-height: 80vh;">
+                                <!-- Left side quote section with image -->
+                                <div class="col-md-6 col-lg-6 d-flex align-items-center mb-4 mb-md-0">
+                                    <div class="quote-section">
+                                        <div class="quote-content">
+                                            <h1 class="quote-title">A WISE QUOTE</h1>
+                                            <h2 class="quote-subtitle">Get Everything You Want</h2>
+                                            <p class="quote-text">You can get everything you want, work hard, trust the
+                                                process, and stick to the plan.</p>
+                                            <div class="brand-name">Cogle</div>
+                                        </div>
+                                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+                                            alt="Inspirational" class="quote-image">
                                     </div>
                                 </div>
 
-                                <!-- Login form -->
+                                <!-- Login form with image -->
                                 <div class="col-md-6 col-lg-4">
-                                    <div class="card shadow">
-                                        <div class="card-header bg-primary text-white text-center">
-                                            <h2 class="mb-0">Login to Your Account</h2>
-                                        </div>
-                                        <div class="card-body p-4">
-                                            <form action="/login/user" method="post" id="loginForm">
-                                                <div class="form-group">
-                                                    <label for="email">Email Address</label>
-                                                    <input type="email" class="form-control" id="email" name="email"
-                                                        required>
-                                                </div>
+                                    <div class="login-form-container">
+                                        <% if (user && user.image) { %>
+                                            <img src="/<%= user.image %>" alt="User" class="form-image">
+                                            <% } else { %>
+                                                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=580&q=80"
+                                                    alt="User" class="form-image">
+                                                <% } %>
+                                                    <h2 class="welcome-text">Welcome Back</h2>
+                                                    <p class="instruction-text">Enter your email and password to access
+                                                        your
+                                                        account!</p>
 
-                                                <div class="form-group">
-                                                    <label for="password">Password</label>
-                                                    <input type="password" class="form-control" id="password"
-                                                        name="password" required>
-                                                </div>
+                                                    <form action="/login/user" method="post" id="loginForm">
+                                                        <div class="form-group">
+                                                            <label for="email">Email</label>
+                                                            <input type="email" class="form-control" id="email"
+                                                                name="email" placeholder="Enter your email" required>
+                                                        </div>
 
-                                                <div class="form-group form-check">
-                                                    <input type="checkbox" class="form-check-input" id="rememberMe"
-                                                        name="rememberMe">
-                                                    <label class="form-check-label" for="rememberMe">Remember me</label>
-                                                </div>
+                                                        <div class="form-group">
+                                                            <label for="password">Password</label>
+                                                            <input type="password" class="form-control" id="password"
+                                                                name="password" placeholder="Enter your password"
+                                                                required>
+                                                        </div>
 
-                                                <div class="form-group text-center mt-4">
-                                                    <button type="submit"
-                                                        class="btn btn-primary btn-lg px-4">Login</button>
-                                                </div>
-                                            </form>
-                                            <div class="text-center mt-3">
-                                                <p>Don't have an account? <a href="/register/user">Register here</a></p>
-                                            </div>
-                                        </div>
+                                                        <div class="checkbox-group">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input"
+                                                                    id="rememberMe" name="rememberMe">
+                                                                <label class="form-check-label"
+                                                                    for="rememberMe">Remember me</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input"
+                                                                    id="fingerPassword" name="fingerPassword">
+                                                                <label class="form-check-label"
+                                                                    for="fingerPassword">Forgot
+                                                                    Password</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <button type="submit" class="btn btn-primary" id="signinButton">
+                                                            <span class="btn-text">Sign in</span>
+                                                            <div class="loading-spinner"></div>
+                                                        </button>
+                                                    </form>
+
+                                                    <a href="#" class="google-btn">
+                                                        <i class="fab fa-google google-icon"></i> Sign in with Google
+                                                    </a>
+
+                                                    <div class="signup-link">
+                                                        <p>Don't have an account? <a href="/register/user">Sign Up</a>
+                                                        </p>
+                                                    </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <%- include('../layout/footer.ejs') %>
 
-                        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-                            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-                            crossorigin="anonymous"></script>
-                        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-                            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-                            crossorigin="anonymous"></script>
-                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-                            integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
-                            crossorigin="anonymous"></script>
+
+                            <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+                                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+                                crossorigin="anonymous"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+                                integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+                                crossorigin="anonymous"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+                                integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+                                crossorigin="anonymous"></script>
+
+
+
+                            <script>
+                                // Loading spinner for sign in button
+                                document.getElementById('loginForm').addEventListener('submit', function (e) {
+                                    const signinButton = document.getElementById('signinButton');
+                                    const email = document.getElementById('email').value;
+                                    const password = document.getElementById('password').value;
+
+                                    // Basic validation
+                                    if (!email || !password) {
+                                        e.preventDefault();
+                                        alert('Please fill in all required fields');
+                                        return;
+                                    }
+
+                                    // Show loading state
+                                    signinButton.classList.add('loading');
+
+                                    // Optional: Auto remove loading state after 5 seconds (as fallback)
+                                    setTimeout(() => {
+                                        signinButton.classList.remove('loading');
+                                    }, 5000);
+                                });
+
+                                // Alternative: Show loading on button click (for testing)
+                                document.getElementById('signinButton').addEventListener('click', function () {
+                                    // The form submission handler above will handle the actual loading state
+                                    // This is just for testing the loading animation
+                                    console.log('Sign in button clicked');
+                                });
+                            </script>
 </body>
 
 </html>
