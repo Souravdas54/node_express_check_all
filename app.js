@@ -68,9 +68,9 @@ res.status(err.status || 500).render('404', {
 // Global middleware for common meta data
 app.use((req, res, next) => {
   res.locals.siteName = 'PremiumShop';
-  res.locals.siteUrl = 'https://node-e-commerce-products.vercel.app/';
+  res.locals.siteUrl = 'https://node-e-commerce-products.vercel.app'; // ← Remove trailing slash
   res.locals.defaultDescription = 'Discover amazing products at unbeatable prices. Quality meets affordability in every purchase.';
-  res.locals.defaultImage = '/image/image.png';
+  res.locals.defaultImage = '/image/image.png'; // ← Change to /images/ (not /image/)
   res.locals.twitterHandle = '@premiumshop';
   next();
 });

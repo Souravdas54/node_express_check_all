@@ -17,7 +17,7 @@ class AllUserController {
             title: 'Premium Shopping Destination - Amazing Products & Deals',
             description: 'Welcome to your premium shopping destination. Discover amazing products at unbeatable prices. Shop now for the best deals!',
             canonicalUrl: '/',
-            ogImage: '/images/image.png',
+            ogImage: '/image/image.png',
             pageType: 'website',
 
             user: req.user || null,
