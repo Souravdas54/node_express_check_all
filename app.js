@@ -49,20 +49,21 @@ app.use((req, res, next) => {
 //         stack: ''
 //     }
 // })
+// next()
 // })
 
 // Global Error Handler
-// app.use((err, req, res, next) => {
-//     console.error(err.stack);
-// res.status(err.status || 500).render('404', {
-//     title: 'Error',
-//     message: 'Something went wrong!',
-//     error: {
-//         status: err.status || 500,
-//         stack: process.env.NODE_ENV === 'production' ? '' : err.stack
-//     }
-// });
-// }); 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+res.status(err.status || 500).render('404', {
+    title: 'Error',
+    message: 'Something went wrong!',
+    error: {
+        status: err.status || 500,
+        stack: process.env.NODE_ENV === 'production' ? '' : err.stack
+    }
+});
+}); 
 
 // ✅ 1. Import middleware
 const { attachUser } = require('./app/middleware/checkValidateUser');

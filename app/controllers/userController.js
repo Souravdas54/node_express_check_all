@@ -14,21 +14,35 @@ class AllUserController {
 
     async index(req, res) {
         res.render('index', {
-            title: 'Home ',
+            title: 'Premium Shopping Destination - Amazing Products & Deals',
+            description: 'Welcome to your premium shopping destination. Discover amazing products at unbeatable prices. Shop now for the best deals!',
+            canonicalUrl: '/',
+            ogImage: '/images/og-home.jpg',
+            pageType: 'website',
+
             user: req.user || null,
         })
     }
 
     async about(req, res) {
         res.render('about', {
-            title: 'About ',
+            title: 'About Us - Premium Shopping Experience',
+            description: 'Learn about our mission to provide quality products at affordable prices. Your satisfaction is our priority.',
+            canonicalUrl: '/about',
+            ogImage: '/images/og-about.jpg',
+            pageType: 'website',
             user: req.user || null,
         })
     }
 
-      async contact(req, res) {
+    async contact(req, res) {
         res.render('contact', {
-            title: 'Contact ',
+            title: 'Contact Us - Get in Touch | PremiumShop',
+            description: 'Have questions? Contact our customer service team. We are here to help you with your shopping experience.',
+            canonicalUrl: '/contact',
+            ogImage: '/images/og-default.jpg',
+            pageType: 'website',
+
             user: req.user || null,
         })
     }
@@ -337,7 +351,7 @@ class AllUserController {
 
     // In your controller
     async user_dashboard(req, res) {
-        
+
         try {
             // console.log('User image path:', req.user?.image);
 

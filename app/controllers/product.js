@@ -102,7 +102,12 @@ class AllProduct {
         // Render the product page 
         try {
             res.render('product', {
-                title: "Product",
+                title: 'Products - Shop Amazing Deals | PremiumShop',
+                description: 'Browse our extensive collection of quality products. Find the best deals and unbeatable prices on all items.',
+                canonicalUrl: '/products',
+                ogImage: '/images/og-products.jpg',
+                pageType: 'website',
+                
                 categories,
                 products,
                 user: req.user,

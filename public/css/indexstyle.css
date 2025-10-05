@@ -58,10 +58,11 @@
             background: white;
             color: var(--primary-color);
             padding: 15px 40px;
+            border: 1px solid black;
             border-radius: 50px;
             font-weight: 600;
-            font-size: 1.1rem;
-            border: none;
+            font-size: 1.5rem;
+            /* border: none; */
             transition: all 0.3s ease;
             animation: fadeInUp 1s ease 0.4s both;
             text-decoration: none;
@@ -72,6 +73,8 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             color: var(--primary-color);
+            border: 1px solid black;
+
         }
 
         /* Features Section */
