@@ -65,6 +65,16 @@ res.status(err.status || 500).render('404', {
 });
 }); 
 
+// Global middleware for common meta data
+app.use((req, res, next) => {
+  res.locals.siteName = 'PremiumShop';
+  res.locals.siteUrl = 'https://node-e-commerce-products.vercel.app/';
+  res.locals.defaultDescription = 'Discover amazing products at unbeatable prices. Quality meets affordability in every purchase.';
+  res.locals.defaultImage = '/image/image.png';
+  res.locals.twitterHandle = '@premiumshop';
+  next();
+});
+
 // ✅ 1. Import middleware
 const { attachUser } = require('./app/middleware/checkValidateUser');
 
