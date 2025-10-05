@@ -17,7 +17,7 @@ class AllUserController {
             title: 'Premium Shopping Destination - Amazing Products & Deals',
             description: 'Welcome to your premium shopping destination. Discover amazing products at unbeatable prices. Shop now for the best deals!',
             canonicalUrl: '/',
-            ogImage: '/images/og-home.jpg',
+            ogImage: '/images/image.png',
             pageType: 'website',
 
             user: req.user || null,
@@ -29,7 +29,7 @@ class AllUserController {
             title: 'About Us - Premium Shopping Experience',
             description: 'Learn about our mission to provide quality products at affordable prices. Your satisfaction is our priority.',
             canonicalUrl: '/about',
-            ogImage: '/images/og-about.jpg',
+            ogImage: '/images/image.png',
             pageType: 'website',
             user: req.user || null,
         })
@@ -40,7 +40,7 @@ class AllUserController {
             title: 'Contact Us - Get in Touch | PremiumShop',
             description: 'Have questions? Contact our customer service team. We are here to help you with your shopping experience.',
             canonicalUrl: '/contact',
-            ogImage: '/images/og-default.jpg',
+            ogImage: '/images/image.png',
             pageType: 'website',
 
             user: req.user || null,
