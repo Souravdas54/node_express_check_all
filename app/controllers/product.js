@@ -102,19 +102,15 @@ class AllProduct {
         // Render the product page 
         try {
             res.render('product', {
-                title: 'Products - Shop Amazing Deals | PremiumShop',
-                description: 'Browse our extensive collection of quality products. Find the best deals and unbeatable prices on all items.',
-                canonicalUrl: '/products',
-                ogImage: '/images/og-products.jpg',
+                title: 'Shop Products - Amazing Deals & Quality Items | PremiumShop',
+                description: 'Browse our extensive collection of quality products. Find amazing deals, unbeatable prices, and premium items for every need.',
+                ogImage: '/image/image.png',
                 pageType: 'website',
-                
+
                 categories,
                 products,
                 user: req.user,
                 filter: req.query
-
-
-
             })
 
         } catch (error) {
@@ -228,7 +224,11 @@ class AllProduct {
         // Render the product page 
         try {
             res.render('product-list', {
-                title: "Product List",
+                title: 'Product Management - Admin Dashboard | PremiumShop',
+                description: 'Manage your product catalog, inventory, and listings. Full administrative control over your e-commerce store products.',
+                ogImage: '/image/image.png',
+                pageType: 'website',
+
                 categories,
                 products,
                 user: req.user, // This comes from checkUserOrAdmin middleware
@@ -287,7 +287,11 @@ class AllProduct {
         }
         try {
             res.render('product-edit', {
-                title: 'Edit product',
+                title: 'Edit Product - Manage Your Listings | PremiumShop',
+                description: 'Edit and update your product details, pricing, and inventory. Manage your online store listings efficiently.',
+                ogImage: '/image/image.png',
+                pageType: 'website',
+
                 user: req.user,
                 products,
 

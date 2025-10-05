@@ -17,7 +17,7 @@ class AllUserController {
             title: 'Premium Shopping Destination - Amazing Products & Deals',
             description: 'Welcome to your premium shopping destination. Discover amazing products at unbeatable prices. Shop now for the best deals!',
             canonicalUrl: '/',
-            ogImage: 'https://node-e-commerce-products.vercel.app/image/image.png',
+            ogImage: '/image/image.png',
             pageType: 'website',
 
             user: req.user || null,
@@ -29,7 +29,7 @@ class AllUserController {
             title: 'About Us - Premium Shopping Experience',
             description: 'Learn about our mission to provide quality products at affordable prices. Your satisfaction is our priority.',
             canonicalUrl: '/about',
-            ogImage: 'https://node-e-commerce-products.vercel.app/image/image.png',
+            ogImage: '/image/image.png',
             pageType: 'website',
             user: req.user || null,
         })
@@ -40,16 +40,32 @@ class AllUserController {
             title: 'Contact Us - Get in Touch | PremiumShop',
             description: 'Have questions? Contact our customer service team. We are here to help you with your shopping experience.',
             canonicalUrl: '/contact',
-            ogImage: 'https://node-e-commerce-products.vercel.app/image/image.png',
+            ogImage: '/image/image.png',
             pageType: 'website',
 
             user: req.user || null,
         })
     }
 
+    async signin(req, res) {
+        res.render('auth/login', {
+            title: 'Login to Your Account - PremiumShop',
+            description: 'Sign in to your PremiumShop account to manage orders, track shipments, and access exclusive member deals.',
+            ogImage: '/image/image.png',
+            pageType: 'website',
+
+            user: req.user || null,
+            error_msg: req.flash('error_msg'),
+            success_msg: req.flash('success_msg')
+        })
+    }
+
     async signup(req, res) {
         res.render('auth/register', {
-            title: "Register",
+            title: 'Create Account - Join PremiumShop',
+            description: 'Create your PremiumShop account to access exclusive deals, faster checkout, and personalized shopping experience.',
+            ogImage: '/image/image.png',
+            pageType: 'website',
             user: req.user || null,
 
         })
@@ -136,7 +152,9 @@ class AllUserController {
         if (!userId) {
             return res.redirect('/register');
         }
-        res.render('auth/otp', { userId: userId });
+        res.render('auth/otp', {
+            userId: userId
+        });
 
         // res.render('auth/otp', {
         //     title: 'OTP Verification',
@@ -231,17 +249,6 @@ class AllUserController {
         }
     }
 
-    async signin(req, res) {
-        res.render('auth/login', {
-            title: 'Login - PremiumShop',
-            description: 'Secure login to your account',
-            ogImage: 'https://node-e-commerce-products.vercel.app/image/image.png',
-            pageType: 'website', // ✅ ADD THIS
-            user: req.user || null,
-            error_msg: req.flash('error_msg'),
-            success_msg: req.flash('success_msg')
-        })
-    }
 
     async login(req, res) {
         console.log('Login request body:', req.body);
