@@ -55,24 +55,24 @@ app.use((req, res, next) => {
 // Global Error Handler
 app.use((err, req, res, next) => {
     console.error(err.stack);
-res.status(err.status || 500).render('404', {
-    title: 'Error',
-    message: 'Something went wrong!',
-    error: {
-        status: err.status || 500,
-        stack: process.env.NODE_ENV === 'production' ? '' : err.stack
-    }
+    res.status(err.status || 500).render('404', {
+        title: 'Error',
+        message: 'Something went wrong!',
+        error: {
+            status: err.status || 500,
+            stack: process.env.NODE_ENV === 'production' ? '' : err.stack
+        }
+    });
 });
-}); 
 
 // Global middleware for common meta data
 app.use((req, res, next) => {
-  res.locals.siteName = 'PremiumShop';
-  res.locals.siteUrl = 'https://node-e-commerce-products.vercel.app'; // ← Remove trailing slash
-  res.locals.defaultDescription = 'Discover amazing products at unbeatable prices. Quality meets affordability in every purchase.';
-  res.locals.defaultImage = '/image/image.png'; // ← Change to /images/ (not /image/)
-  res.locals.twitterHandle = '@premiumshop';
-  next();
+    res.locals.siteName = 'PremiumShop';
+    res.locals.siteUrl = 'https://node-e-commerce-products.vercel.app';
+    res.locals.defaultDescription = 'Discover amazing products at unbeatable prices. Quality meets affordability in every purchase.';
+    res.locals.defaultImage = 'https://node-e-commerce-products.vercel.app/image/image.png'; // ✅ FULL URL
+    res.locals.twitterHandle = '@premiumshop';
+    next();
 });
 
 // ✅ 1. Import middleware
