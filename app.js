@@ -26,12 +26,12 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Show error message (No Internet Connection) 
 // ✅ Optional Middleware to Block Requests if No Internet
-app.use((req, res, next) => {
-    if (mongoose.connection.readyState !== 1) {
-        return res.send('<h3 style="color:red;">❌ Please check your internet connection.</h3>');
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     if (mongoose.connection.readyState !== 1) {
+//         return res.send('<h3 style="color:red;">❌ Please check your internet connection.</h3>');
+//     }
+//     next();
+// });
 
 // Call the cookies
 app.use(cookies())
