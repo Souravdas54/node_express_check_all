@@ -10,6 +10,8 @@ const session = require('express-session')
 const cookies = require('cookie-parser')
 const flash = require('connect-flash')
 
+const mongoose=require('mongoose')
+const MongoStore=require('connect-mongo')
 const DbConnect = require('./app/config/dbConnect')
 DbConnect()
 
@@ -22,11 +24,26 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
+// Show error message (No Internet Connection) 
+// ✅ Optional Middleware to Block Requests if No Internet
+app.use((req, res, next) => {
+    if (mongoose.connection.readyState !== 1) {
+        return res.send('<h3 style="color:red;">❌ Please check your internet connection.</h3>');
+    }
+    next();
+});
+
+// Call the cookies
 app.use(cookies())
+
+// Call the Session
 app.use(session({
     secret: process.env.SESSION_SECRET_KEY,
     resave: false,
     saveUninitialized: true,
+     store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_CONNECT_URL
+    }),
     cookie: { secure: false } // Set to true if using HTTPS
 }))
 
@@ -46,28 +63,28 @@ app.use((req, res, next) => {
 //     message: "The page you are looking for does not exist",
 //     error: {
 //         status: 404,
-//         stack: ''
+//         stack: null
 //     }
 // })
-// next()
+// // next()
 // })
 
 // Global Error Handler
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(err.status || 500).render('404', {
-        title: 'Error',
-        message: 'Something went wrong!',
-        error: {
-            status: err.status || 500,
-            stack: process.env.NODE_ENV === 'production' ? '' : err.stack
-        }
-    });
-});
+// app.use((err, req, res, next) => {
+//     console.error(err.stack);
+//     res.status(err.status || 500).render('404', {
+//         title: 'Error',
+//         message: 'Something went wrong!',
+//         error: {
+//             status: err.status || 500,
+//             stack: process.env.NODE_ENV === 'production' ? '' : err.stack
+//         }
+//     });
+// });
 
 // Global middleware for common meta data
 app.use((req, res, next) => {
-    res.locals.siteName = 'PremiumShop';
+    res.locals.siteName = 'Premium Shop';
     res.locals.siteUrl = 'https://node-e-commerce-products.vercel.app';
     res.locals.defaultDescription = 'Discover amazing products at unbeatable prices. Quality meets affordability in every purchase.';
     res.locals.defaultImage = 'https://node-e-commerce-products.vercel.app/image/image.png'; // ✅ FULL URL

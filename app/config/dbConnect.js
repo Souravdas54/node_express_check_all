@@ -2,15 +2,16 @@ const mongoose = require('mongoose')
 
 const MongodbConnect = async () => {
 
-    const DbConnect = mongoose.connect(process.env.MONGODB_CONNECT_URL)
-
-    if (DbConnect) {
+    try {
+        await mongoose.connect(process.env.MONGODB_CONNECT_URL)
 
         console.log('MongoDB connect successfully ✔');
 
-    } else {
-        console.log('Please check your internet connection');
+    } catch (error) {
+
+        console.error('Please check your internet connection.');
 
     }
 }
-module.exports = MongodbConnect
+
+module.exports = MongodbConnect;
