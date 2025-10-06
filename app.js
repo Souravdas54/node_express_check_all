@@ -10,8 +10,8 @@ const session = require('express-session')
 const cookies = require('cookie-parser')
 const flash = require('connect-flash')
 
-const mongoose=require('mongoose')
-const MongoStore=require('connect-mongo')
+const mongoose = require('mongoose')
+const MongoStore = require('connect-mongo')
 const DbConnect = require('./app/config/dbConnect')
 DbConnect()
 
@@ -26,12 +26,12 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Show error message (No Internet Connection) 
 // ✅ Optional Middleware to Block Requests if No Internet
-app.use((req, res, next) => {
-    if (mongoose.connection.readyState !== 1) {
-        return res.send('<h3 style="color:red;">❌ Please check your internet connection.</h3>');
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     if (mongoose.connection.readyState !== 1) {
+//         return res.send('<h3 style="color:red;">❌ Please check your internet connection.</h3>');
+//     }
+//     next();
+// });
 
 // Call the cookies
 app.use(cookies())
@@ -41,7 +41,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET_KEY,
     resave: false,
     saveUninitialized: true,
-     store: MongoStore.create({
+    store: MongoStore.create({
         mongoUrl: process.env.MONGODB_CONNECT_URL
     }),
     cookie: { secure: false } // Set to true if using HTTPS

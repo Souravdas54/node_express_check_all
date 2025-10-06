@@ -1,43 +1,38 @@
 const multer = require('multer')
-const fs = require('fs')
-const path = require('path')
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
+const cloudinary = require('./cloudinary')
 
 // ====== AUTH IMAGE UPLOADS ====== //
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads')
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, './uploads')
 
-        // let folder = './uploads';
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now() + '-' + file.originalname)
+//     }
+// })
 
-        // // Check if route is for products
-        // if (req.baseUrl.includes('products')) {
-        //     folder = './uploads/products'
-        // }
-
-
-        // // Create folder if not exists
-        // if (!fs.existsSync(folder)) {
-        //     fs.mkdirSync(folder, { recursive: true })
-        // }
-        // cb(null, folder)
-        
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname)
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'users',
+        allow_format: ['jpg', 'jpeg', 'png'],
+        transformation: [{ width: 500, height: 500, crop: 'limit' }]
     }
 })
 
-const fileFilter = (req, file, cb) => {
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-        return cb(null, Error('Only image file are allowed !'), false)
-    }
-    cb(null, true)
-}
+// const fileFilter = (req, file, cb) => {
+//     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+//         return cb(null, Error('Only image file are allowed !'), false)
+//     }
+//     cb(null, true)
+// }
 
 const uploads = multer({
     storage,
     limits: { fileSize: 1024 * 1024 * 2 },
-    fileFilter
+    // fileFilter
 })
 
 module.exports = uploads

@@ -363,7 +363,7 @@ class AllUserController {
     async user_dashboard(req, res) {
 
         try {
-            // console.log('User image path:', req.user?.image);
+            console.log('User image path:', req.user?.image);
 
             res.render('dashboads/userdashboard', {
                 title: 'User Dashboard',
