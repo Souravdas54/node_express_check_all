@@ -223,7 +223,7 @@
             border: 2px solid var(--primary-color);
             object-fit: cover;
             background-color: white;
-            overflow: visible !important;
+            overflow: hidden !important;
             visibility: visible !important;
             position: relative !important;
             z-index: 1001 !important;
@@ -951,8 +951,8 @@
 
         <div class="user-profile-sidebar">
             <% if (user.image) { %>
-                <img src="<%= user.image || '/image/user.png' %>" alt="User Profile" class="profile-avatar">
-
+                <img src="<%= user.image %>" alt="User Profile" class="profile-avatar">
+ 
                 <% } %>
 
                     <p>
@@ -994,7 +994,7 @@
                 </div>
                 <div class="user-info" id="userInfo">
                     <% if (user.image) { %>
-                        <img src="<%= user.image %>" alt="User Avatar" class="user-avatar-small">
+                        <img src="/<%= user.image %>" alt="User Avatar" class="user-avatar-small">
                         <% } %>
                             <div class="user-details">
                                 <div class="user-name">
