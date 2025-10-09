@@ -8,10 +8,11 @@ const path = require('path')
 
 const session = require('express-session')
 const cookies = require('cookie-parser')
+const cors = require('cors')
 const flash = require('connect-flash')
 
-const mongoose = require('mongoose')
-const MongoStore = require('connect-mongo')
+// const mongoose = require('mongoose')
+// const MongoStore = require('connect-mongo')
 const DbConnect = require('./app/config/dbConnect')
 DbConnect()
 
@@ -41,9 +42,9 @@ app.use(session({
     secret: process.env.SESSION_SECRET_KEY,
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_CONNECT_URL
-    }),
+    // store: MongoStore.create({
+    //     mongoUrl: process.env.MONGODB_CONNECT_URL
+    // }),
     cookie: { secure: false } // Set to true if using HTTPS
 }))
 
@@ -55,6 +56,15 @@ app.use((req, res, next) => {
         res.locals.info_msg = req.flash('info_msg'),
         next()
 })
+
+app.use(cors())
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'https://node-e-commerce-products.vercel.app/',
+    optionsSuccessStatus: 200,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true  // important if using session/cookies
+}));
 
 // 404 Error Handler
 // app.use((req, res, next) => {

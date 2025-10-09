@@ -8,7 +8,7 @@ const transporter = emailValidate.createTransport({
         pass: process.env.EMAIL_PASS
     }
 })
-a
+
 const sendOtpEmail = async (email, user) => {
 
     try {
