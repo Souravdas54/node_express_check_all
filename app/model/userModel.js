@@ -33,6 +33,7 @@ const UserSchema = new mongoose.Schema({
     failed_login_attempts: { type: Number, default: 0 },
     last_failed_login: { type: Date },
     last_login: { type: Date },
+    
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now }
 
