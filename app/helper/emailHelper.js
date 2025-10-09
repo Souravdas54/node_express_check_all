@@ -52,4 +52,4 @@ const sendOtpEmail = async (email, user) => {
     }
 }
 
-module.exports = sendOtpEmail 
+module.exports = sendOtpEmail;
